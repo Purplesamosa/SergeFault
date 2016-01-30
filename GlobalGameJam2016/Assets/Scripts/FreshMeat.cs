@@ -138,5 +138,6 @@ public class FreshMeat : GGJBase {
 	{
 		m_RectT.anchoredPosition = AudienceManager.Instance.GetExitPosition();
 		AudienceManager.Instance.RetrieveMeat (m_Id);
+		AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.KillVillagerSound);
 	}
 }

@@ -78,6 +78,7 @@ public class AudienceManager : GGJBase {
 				for(int i=0;i<m_UsedMeats.Count;i++)
 					m_Donations+=m_UsedMeats[i].ChargeDonation();
 				GameManager.Instance.AddMoney(m_Donations);
+				AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.MoneyChargeSound); //play the money sound
 			}
 		}
 	}

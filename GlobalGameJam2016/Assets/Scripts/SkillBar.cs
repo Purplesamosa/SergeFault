@@ -7,6 +7,10 @@ public class SkillBar : MonoBehaviour {
 	[SerializeField]
 	private Image m_Slider;
 
+	//ID used to call the correct music
+	[SerializeField]
+	private AudioManager.SfxLoop m_SliderEnum;
+
 	//max value of bar
 	[SerializeField]
 	private float m_MaxValue;
@@ -85,7 +89,12 @@ public class SkillBar : MonoBehaviour {
 		{
 			if(GameManager.Instance.SpendMoney(m_Cost))
 			{
+				AudioManager.Instance.PlaySfxLoop(m_SliderEnum);
 				m_Value = Mathf.Min(m_Value + m_Increment,1);
+			}
+			else
+			{
+				AudioManager.Instance.StopSfxLoop(m_SliderEnum);
 			}
 		}
 	}
@@ -136,6 +145,7 @@ public class SkillBar : MonoBehaviour {
 	{
 		if(GameManager.Instance.IsGameOver())
 			return;
+		AudioManager.Instance.StopSfxLoop(m_SliderEnum);
 		GetNewKey();
 	}
 }
