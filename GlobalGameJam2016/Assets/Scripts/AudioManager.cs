@@ -20,19 +20,23 @@ public class AudioManager : MonoBehaviour
 	
 	public enum SfxLoop
 	{
-		SFX0,
+		Skillbar0 = 0,
+		Skillbar1 = 1,
+		Skillbar2 = 2,
 		SFX1
 	};
 
 	public enum SfxNoLoop
 	{
-		SFX0
+		MoneyChargeSound,
+		KillVillagerSound
 	};
 
 	public AudioSource m_Intro;
 	public float m_IntroDuration;
 	private bool m_IntroFading;
 	public AudioSource m_LoopedSound;
+	public AudioSource m_EndSound;
 	//THE BACKGROUND MUSIC SOUND
 	public AudioSource[] m_Background;
 	//NO LOOPS ARRAY MUST HAVE AS LENGTH THE AMOUNT OF MAX SFX YOU WANT TO HAVE AT ONCE
@@ -85,6 +89,8 @@ public class AudioManager : MonoBehaviour
 		
 		m_Intro.Play ();
 		m_IntroFading = false;
+
+		m_EndSound.Stop();
 	}
 
 	void Update ()
@@ -95,10 +101,10 @@ public class AudioManager : MonoBehaviour
 		if(m_IntroFading) IntroFade();
 
 #if UNITY_EDITOR
-		if(Input.GetKeyDown(KeyCode.Q)) PlaySfxNoLoop(SfxNoLoop.SFX0);
+		if(Input.GetKeyDown(KeyCode.Q)) PlaySfxNoLoop(SfxNoLoop.MoneyChargeSound);
 
-		if(Input.GetKeyDown(KeyCode.W)) PlaySfxLoop(SfxLoop.SFX0);
-		if(Input.GetKeyUp(KeyCode.W)) StopSfxLoop(SfxLoop.SFX0);
+		if(Input.GetKeyDown(KeyCode.W)) PlaySfxLoop(SfxLoop.Skillbar0);
+		if(Input.GetKeyUp(KeyCode.W)) StopSfxLoop(SfxLoop.Skillbar0);
 
 		if(Input.GetKeyDown(KeyCode.E)) PlaySfxLoop(SfxLoop.SFX1);
 		if(Input.GetKeyUp(KeyCode.E)) StopSfxLoop(SfxLoop.SFX1);
@@ -204,6 +210,17 @@ public class AudioManager : MonoBehaviour
                 if(m_CurrentLayer == m_TargetLayer) m_BGLayerChanging = false;
             }
 		}
+	}
+
+	public void EndGame()
+	{
+		for(int i = 0; i < m_Background.Length; ++i)
+		{
+			m_Background[i].Stop();
+		}
+
+		m_EndSound.Play();
+		m_EndSound.loop = false;
 	}
 	#endregion
 

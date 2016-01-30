@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour {
 		m_EndTime = Time.time;
 		m_SessionLength = m_EndTime - m_InitTime; //get length of session
 		m_IsGameOver = true; 
+		AudioManager.Instance.EndGame();
 	}
 
 	public float GetGameLength()
