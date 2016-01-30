@@ -13,14 +13,15 @@ public class AudienceManager : GGJBase {
 		}
 	}
 
-	public MeatT[] m_Types;
-
 	[SerializeField]
 	private List<FreshMeat> m_FreshMeats=new List<FreshMeat>();
 	[SerializeField]
 	private List<FreshMeat> m_UsedMeats=new List<FreshMeat>();
 	[SerializeField]
 	private List<RectTransform> m_Locations=new List<RectTransform>();
+
+	public RectTransform m_BottomHelper;
+	public RectTransform m_TopHelper;
 
 	[SerializeField]
 	private Vector2 m_ExitPosition;
@@ -30,8 +31,13 @@ public class AudienceManager : GGJBase {
 	private bool m_RitualInProgress=false;
 
 	//TUNING: 
-	private float m_MinSpawnRate=4;
-	private float m_MaxSpawnRate=6;
+	public float m_MinMoney=5;
+	public float m_MaxMoney=15;
+	public float m_MinFaith=2;
+	public float m_MaxFaith=5;
+	
+	private float m_MinSpawnRate=2;
+	private float m_MaxSpawnRate=4;
 	private float m_TickRate=0.1f;
 	private float m_MaxMoneyDenominator=1.25f;
 	private float m_MaxFaithDenominator=1.25f;
@@ -39,6 +45,8 @@ public class AudienceManager : GGJBase {
 	private float m_SpawnRate;
 	private float m_CollectRate=1;
 	private float m_Donations = 0;
+
+	public float m_FaithDecrement=1f;
 
 	private float m_FullHouseDelay=0.5f;
 	
@@ -78,7 +86,8 @@ public class AudienceManager : GGJBase {
 	{
 		while (!GameManager.Instance.IsGameOver()) 
 		{
-			m_SpawnRate=Random.Range(m_MinSpawnRate,m_MaxSpawnRate)*((100+GameManager.Instance.GetBarValue(0))/100);
+			m_SpawnRate=Random.Range(m_MinSpawnRate*(1/GameManager.Instance.GetBarValue(0)),m_MaxSpawnRate*(1/GameManager.Instance.GetBarValue(0)));
+			Debug.Log("ESPERAR: "+m_SpawnRate+" BAR: "+GameManager.Instance.GetBarValue(0));
 			//Spawn fresh meat delay
 			yield return new WaitForSeconds(m_SpawnRate);
 			if(m_FreshMeats.Count>0)
@@ -132,44 +141,37 @@ public class AudienceManager : GGJBase {
 		return (MeatType)Random.Range(0,(int)MeatType.MAX);
 	}
 
-	public void GetMoneyLimits(MeatType _type,out float _minVal,out float _maxVal)
+	public void GetMoneyLimits(out float _minVal,out float _maxVal)
 	{
-		for (int i=0; i<m_Types.Length; i++) {
-			if(m_Types[i].m_Type==_type)
-			{
-				_minVal=Mathf.Floor(m_Types[i].m_MinMoney*GameManager.Instance.GetBarValue(1));
-				_maxVal=Mathf.Ceil(m_Types[i].m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
-				return;
-			}
-		}
-
-		_minVal = _maxVal = 0;
+		_minVal=Mathf.Floor(m_MinMoney*GameManager.Instance.GetBarValue(1));
+		_maxVal=Mathf.Ceil(m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
 	}
 
-	public void GetFaithLimits(MeatType _type,out float _minVal,out float _maxVal)
+	public void GetFaithLimits(out float _minVal,out float _maxVal)
 	{
-		for (int i=0; i<m_Types.Length; i++) {
-			if(m_Types[i].m_Type==_type)
-			{
-				_minVal=Mathf.Floor(m_Types[i].m_MinFaith*GameManager.Instance.GetBarValue(2));
-				_maxVal=Mathf.Ceil(m_Types[i].m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
-				return;
-			}
-		}
-		_minVal = _maxVal = 0;
+		_minVal=Mathf.Floor(m_MinFaith*GameManager.Instance.GetBarValue(2));
+		_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
 	}
 
 	public void TryToRitual(int _idx)
 	{
-		for (int i=0; i<m_UsedMeats.Count; i++) 
-		{
-			if(m_UsedMeats[i].m_Id==_idx)
-			{
-				BossManager.Instance.DecreaseAnger(m_UsedMeats[i].ApplyRitual());
+		//make ritual to the choosen one
+		for (int i=0; i<m_UsedMeats.Count; i++) {
+			if (m_UsedMeats [i].m_Id == _idx) {
+				BossManager.Instance.DecreaseAnger (m_UsedMeats [i].ApplyRitual ());
+				break;
 			}
-			else
-				m_UsedMeats[i].RitualAssistance();
 		}
+		//Resolve RitualAssistance
+		for (int j=0; j<m_UsedMeats.Count; j++) 
+		{
+			m_UsedMeats[j].RitualAssistance();
+		}
+	}
+
+	public float GetRandomHeight()
+	{
+		return Random.Range (m_BottomHelper.anchoredPosition.y, m_TopHelper.anchoredPosition.y);
 	}
 
 	public float GetInitialYPos()
@@ -180,17 +182,5 @@ public class AudienceManager : GGJBase {
 	public Vector2 GetExitPosition()
 	{
 		return m_ExitPosition;
-	}
-
-
-	[System.Serializable]
-	public class MeatT
-	{
-		public string m_Name;
-		public MeatType m_Type;
-		public float m_MinMoney;
-		public float m_MaxMoney;
-		public float m_MinFaith;
-		public float m_MaxFaith;
 	}
 }

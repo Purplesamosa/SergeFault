@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FreshMeat : GGJBase {
 
@@ -11,6 +12,9 @@ public class FreshMeat : GGJBase {
 	public RectTransform m_LocationRef;
 	public Vector2 m_LocationVector;
 	public MeatType m_Type=MeatType.MAX;
+
+	public Text m_MoneyText;
+	public Text m_FaithText;
 
 	public RectTransform m_RectT;
 	private Vector2 m_MoveDir;
@@ -25,11 +29,11 @@ public class FreshMeat : GGJBase {
 	private float m_MinMoney;
 	private float m_MaxMoney;
 
-	private float m_FaithDecrement=0.1f;
+
 
 	public void RitualClick()
 	{
-		if (GameManager.Instance.IsGameOver ())
+		if (GameManager.Instance.IsGameOver ()||!m_LocationReached)
 			return;
 		AudienceManager.Instance.TryToRitual (m_Id);
 	}
@@ -38,13 +42,16 @@ public class FreshMeat : GGJBase {
 	{
 		m_Type = _type;
 		m_LocationReached = false;
-		AudienceManager.Instance.GetMoneyLimits (_type, out m_MinMoney, out m_MaxMoney);
-		AudienceManager.Instance.GetFaithLimits (_type, out m_MinFaith, out m_MaxFaith);
+		AudienceManager.Instance.GetMoneyLimits (out m_MinMoney, out m_MaxMoney);
+		AudienceManager.Instance.GetFaithLimits (out m_MinFaith, out m_MaxFaith);
 		m_Money = Random.Range (m_MinMoney, m_MaxMoney);
-		m_Faith = Random.Range (m_MinFaith, m_MaxFaith);
-		Debug.Log ("ENTRA: " + m_Id.ToString () + " MONEY: " + m_Money.ToString () + " FAITH: " + m_Faith);
+		m_Faith = Mathf.Floor(Random.Range (m_MinFaith, m_MaxFaith));
+
+		m_MoneyText.text = m_Money.ToString();
+		m_FaithText.text = m_Faith.ToString();
+
 		m_LocationRef = _location;
-		m_LocationVector = m_LocationRef.anchoredPosition;
+		m_LocationVector = new Vector2(m_LocationRef.anchoredPosition.x,AudienceManager.Instance.GetRandomHeight());
 		MoveToSeat ();
 	}
 
@@ -62,7 +69,7 @@ public class FreshMeat : GGJBase {
 			yield return 0;
 			if(Vector2.Distance(m_RectT.anchoredPosition,m_LocationVector)<m_MinDistanceToReach)
 			{
-				m_LocationReached=true;
+				m_MoveCallback();
 				m_RectT.anchoredPosition=m_LocationVector;
 			}else
 			{
@@ -82,7 +89,6 @@ public class FreshMeat : GGJBase {
 	{
 		Disappear ();
 		//TODO: apply the ritual animation
-		Debug.Log ("Die bitch die!!");
 		return m_Faith;
 	}
 
@@ -97,10 +103,12 @@ public class FreshMeat : GGJBase {
 
 	private void DecreaseFaith()
 	{
-		m_Faith = Mathf.Max (m_Faith-m_FaithDecrement,0);
+		if (!m_LocationReached)
+			return;
+		m_Faith = Mathf.Max (m_Faith-AudienceManager.Instance.m_FaithDecrement,0);
+		m_FaithText.text = m_Faith.ToString();
 		if (m_Faith == 0) 
 		{
-			Debug.Log("Leaving");
 			Leave();
 		}
 	}
@@ -116,13 +124,13 @@ public class FreshMeat : GGJBase {
 	private void SeatReached()
 	{
 		m_MoveCallback -= SeatReached;
-		Debug.Log ("Seat Reached by Meat: " + m_Id);
+		m_LocationReached=true;
 	}
 
 	private void SceneLeft()
 	{
 		m_MoveCallback -= SceneLeft;
-		Debug.Log ("Scene Left by Meat: " + m_Id);
+		m_LocationReached=true;
 		Disappear ();
 	}
 

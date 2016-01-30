@@ -5,7 +5,7 @@ using System.Collections;
 public class SkillBar : MonoBehaviour {
 
 	[SerializeField]
-	private Slider m_Slider;
+	private Image m_Slider;
 
 	//max value of bar
 	[SerializeField]
@@ -66,13 +66,13 @@ public class SkillBar : MonoBehaviour {
 	private void RunSmoothing()
 	{
 		m_CurVisualValue += (m_Value - m_CurVisualValue) * m_VisualSpeed * Time.deltaTime;
-		m_Slider.value = m_CurVisualValue;
+		m_Slider.fillAmount = m_CurVisualValue;
 	}
 
 	//getter used by GameManager
 	public float GetValue()
 	{
-		if (m_Value == 0)
+		if (m_Value < m_MinValue)
 			return m_MinValue;
 		return m_Value*m_MaxValue;
 	}

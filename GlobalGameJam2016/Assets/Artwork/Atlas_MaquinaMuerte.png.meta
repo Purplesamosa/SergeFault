@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: cd0c72b0349a14c099b430b8f160a93c
+timeCreated: 1454190381
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Atlas_MaquinaMuerte_0
+    21300002: Atlas_MaquinaMuerte_1
+    21300004: Atlas_MaquinaMuerte_2
+    21300006: Atlas_MaquinaMuerte_3
+    21300008: Atlas_MaquinaMuerte_4
+    21300010: Atlas_MaquinaMuerte_5
+    21300012: Atlas_MaquinaMuerte_6
+    21300014: Atlas_MaquinaMuerte_7
+    21300016: Atlas_MaquinaMuerte_8
+    21300018: Atlas_MaquinaMuerte_9
+    21300020: Atlas_MaquinaMuerte_10
+    21300022: Atlas_MaquinaMuerte_11
+    21300024: Atlas_MaquinaMuerte_12
+    21300026: Atlas_MaquinaMuerte_13
+    21300028: Atlas_MaquinaMuerte_14
+    21300030: Atlas_MaquinaMuerte_15
+    21300032: Atlas_MaquinaMuerte_16
+    21300034: Atlas_MaquinaMuerte_17
+    21300036: Atlas_MaquinaMuerte_18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -2
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Atlas_MaquinaMuerte_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_3
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_4
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_5
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 477
+        width: 57
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_6
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 465
+        width: 35
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 148
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_8
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 296
+        width: 92
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 169
+        width: 153
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_10
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 238
+        width: 50
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_11
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 238
+        width: 50
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_12
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 180
+        width: 50
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 86
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_14
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 90
+        width: 86
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_15
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 90
+        width: 86
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 25
+        width: 66
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_17
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 25
+        width: 66
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_MaquinaMuerte_18
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 25
+        width: 66
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
