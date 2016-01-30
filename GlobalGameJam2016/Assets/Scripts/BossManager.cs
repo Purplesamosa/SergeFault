@@ -1,7 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossManager: Singleton<BossManager> {
+public class BossManager: MonoBehaviour {
+	#region Singleton
+	private static BossManager instance;
+	
+	public static BossManager Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
+	#endregion
 
 	private bool m_SafeZone = false;
 	private float m_TotalAnger = 60F;
