@@ -13,7 +13,7 @@ public class AudienceManager : GGJBase {
 		}
 	}
 
-	private MeatT[] m_Types;
+	public MeatT[] m_Types;
 
 	[SerializeField]
 	private List<FreshMeat> m_FreshMeats=new List<FreshMeat>();
@@ -46,6 +46,11 @@ public class AudienceManager : GGJBase {
 		instance = this;
 	}
 
+	void Start()
+	{
+		InitializeGame ();
+	}
+
 	public void InitializeGame()
 	{
 		StartCoroutine (SpawnTick ());
@@ -71,7 +76,7 @@ public class AudienceManager : GGJBase {
 
 	IEnumerator SpawnTick()
 	{
-		while (true) 
+		while (!GameManager.Instance.IsGameOver()) 
 		{
 			m_SpawnRate=Random.Range(m_MinSpawnRate,m_MaxSpawnRate)*((100+GameManager.Instance.GetBarValue(0))/100);
 			//Spawn fresh meat delay
@@ -117,14 +122,14 @@ public class AudienceManager : GGJBase {
 		if (idToRetrieve != -1) 
 		{
 			m_FreshMeats.Add(m_UsedMeats[idToRetrieve]);
-			m_Locations.Add(m_UsedMeats[idToRetrieve]);
+			m_Locations.Add(m_UsedMeats[idToRetrieve].m_LocationRef);
 			m_UsedMeats.RemoveAt(idToRetrieve);
 		}
 	}
 
 	private MeatType GetRandomType()
 	{
-		return (MeatType)Random.Range(0,(float)MeatType.MAX);
+		return (MeatType)Random.Range(0,(int)MeatType.MAX);
 	}
 
 	public void GetMoneyLimits(MeatType _type,out float _minVal,out float _maxVal)
@@ -132,8 +137,8 @@ public class AudienceManager : GGJBase {
 		for (int i=0; i<m_Types.Length; i++) {
 			if(m_Types[i].m_Type==_type)
 			{
-				_minVal=m_Types[i].m_MinMoney*GameManager.Instance.GetBarValue(1);
-				_maxVal=m_Types[i].m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator;
+				_minVal=Mathf.Floor(m_Types[i].m_MinMoney*GameManager.Instance.GetBarValue(1));
+				_maxVal=Mathf.Ceil(m_Types[i].m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
 				return;
 			}
 		}
@@ -146,12 +151,25 @@ public class AudienceManager : GGJBase {
 		for (int i=0; i<m_Types.Length; i++) {
 			if(m_Types[i].m_Type==_type)
 			{
-				_minVal=m_Types[i].m_MinFaith*GameManager.Instance.GetBarValue(2);
-				_maxVal=m_Types[i].m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator;;
+				_minVal=Mathf.Floor(m_Types[i].m_MinFaith*GameManager.Instance.GetBarValue(2));
+				_maxVal=Mathf.Ceil(m_Types[i].m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
 				return;
 			}
 		}
 		_minVal = _maxVal = 0;
+	}
+
+	public void TryToRitual(int _idx)
+	{
+		for (int i=0; i<m_UsedMeats.Count; i++) 
+		{
+			if(m_UsedMeats[i].m_Id==_idx)
+			{
+				BossManager.Instance.DecreaseAnger(m_UsedMeats[i].ApplyRitual());
+			}
+			else
+				m_UsedMeats[i].RitualAssistance();
+		}
 	}
 
 	public float GetInitialYPos()
@@ -168,6 +186,7 @@ public class AudienceManager : GGJBase {
 	[System.Serializable]
 	public class MeatT
 	{
+		public string m_Name;
 		public MeatType m_Type;
 		public float m_MinMoney;
 		public float m_MaxMoney;

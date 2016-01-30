@@ -14,7 +14,7 @@ public class FreshMeat : GGJBase {
 
 	public RectTransform m_RectT;
 	private Vector2 m_MoveDir;
-	private float m_MoveSpeed=10;
+
 	private float m_MinDistanceToReach=1;
 
 	private float m_Money;
@@ -27,13 +27,22 @@ public class FreshMeat : GGJBase {
 
 	private float m_FaithDecrement=0.1f;
 
+	public void RitualClick()
+	{
+		if (GameManager.Instance.IsGameOver ())
+			return;
+		AudienceManager.Instance.TryToRitual (m_Id);
+	}
+
 	public void Spawn(MeatType _type,RectTransform _location)
 	{
+		m_Type = _type;
 		m_LocationReached = false;
 		AudienceManager.Instance.GetMoneyLimits (_type, out m_MinMoney, out m_MaxMoney);
 		AudienceManager.Instance.GetFaithLimits (_type, out m_MinFaith, out m_MaxFaith);
 		m_Money = Random.Range (m_MinMoney, m_MaxMoney);
 		m_Faith = Random.Range (m_MinFaith, m_MaxFaith);
+		Debug.Log ("ENTRA: " + m_Id.ToString () + " MONEY: " + m_Money.ToString () + " FAITH: " + m_Faith);
 		m_LocationRef = _location;
 		m_LocationVector = m_LocationRef.anchoredPosition;
 		MoveToSeat ();
@@ -48,7 +57,7 @@ public class FreshMeat : GGJBase {
 
 	IEnumerator MoveToLocation()
 	{
-		while(!m_LocationReached)
+		while(!m_LocationReached&&!GameManager.Instance.IsGameOver())
 		{
 			yield return 0;
 			if(Vector2.Distance(m_RectT.anchoredPosition,m_LocationVector)<m_MinDistanceToReach)
@@ -59,7 +68,7 @@ public class FreshMeat : GGJBase {
 			{
 				m_MoveDir=m_LocationVector-m_RectT.anchoredPosition;
 				m_MoveDir.Normalize();
-				m_RectT.anchoredPosition+=m_MoveDir*m_MoveSpeed*Time.deltaTime;
+				m_RectT.anchoredPosition+=m_MoveDir*GameManager.Instance.m_MoveSpeed*Time.deltaTime;
 			}
 		}
 	}
@@ -83,6 +92,7 @@ public class FreshMeat : GGJBase {
 		{
 			return m_Money;
 		}
+		return 0;
 	}
 
 	private void DecreaseFaith()
@@ -90,6 +100,7 @@ public class FreshMeat : GGJBase {
 		m_Faith = Mathf.Max (m_Faith-m_FaithDecrement,0);
 		if (m_Faith == 0) 
 		{
+			Debug.Log("Leaving");
 			Leave();
 		}
 	}

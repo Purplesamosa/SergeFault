@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BossManager: MonoBehaviour {
 	#region Singleton
@@ -31,16 +32,19 @@ public class BossManager: MonoBehaviour {
 		//this is to test the tick system
 	}
 
-	private bool m_SafeZone = false;
+	public Slider m_Slider;
+
+	private bool m_SafeZone = true;
 	private float m_TotalAnger = 60F;
-	private float m_AngerIncrement = 1F;
+	[SerializeField]
+	private float m_AngerIncrement = 0.1F;
 	[SerializeField]
 	private float m_IncrementRate = 0.1F;
 	[SerializeField]
 	private float m_CurrentAnger;
 
 	public void deactivateSafeZone(){
-		m_SafeZone = true;
+		m_SafeZone = false;
 	}
 
 	public void DecreaseAnger(float faith){
@@ -50,26 +54,29 @@ public class BossManager: MonoBehaviour {
 	private IEnumerator Tick(){
 		while(true){
 			yield return new WaitForSeconds(m_IncrementRate);
-			m_CurrentAnger += m_AngerIncrement;
+			m_CurrentAnger = Mathf.Min(m_CurrentAnger+m_AngerIncrement,m_TotalAnger);
+			BossFeedbackUpdate();
 			if(m_CurrentAnger >= m_TotalAnger)
 				GameManager.Instance.LoseGame();
 		}
 	}
 
 	public void BossFeedbackUpdate(){
-
+		m_Slider.value = m_CurrentAnger;
 	}
 
 	private IEnumerator SafeZone(){
-		while(!m_SafeZone)
+		while(m_SafeZone)
 			yield return 0;
 		StartCoroutine ("Tick");
 	}
 	// Use this for initialization
 	void Start () 
 	{
+		m_Slider.maxValue = m_TotalAnger;
 		m_CurrentAnger = 0;
 		StartCoroutine ("SafeZone");
+		deactivateSafeZone ();
 	}
 
 

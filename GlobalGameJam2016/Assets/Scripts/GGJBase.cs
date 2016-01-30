@@ -6,8 +6,8 @@ public class GGJBase : MonoBehaviour {
 	public enum MeatType
 	{
 		TypeA=0,
-		TypeB,
-		TypeC,
-		MAX
+		TypeB=1,
+		TypeC=2,
+		MAX=3
 	}
 }
