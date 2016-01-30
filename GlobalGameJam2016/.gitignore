@@ -7,8 +7,3 @@
 !/ProjectSettings/
 !.gitignore
 !*.keystore
- 
-Assets/Dynamic Variables/Resources/DynamicVariablesDebug.json
-Assets/Dynamic Variables/Resources/DynamicVariablesDebug.json.meta
-Assets/Dynamic Variables/Resources/DynamicVariablesRelease.json
-Assets/Dynamic Variables/Resources/DynamicVariablesRelease.json.meta
