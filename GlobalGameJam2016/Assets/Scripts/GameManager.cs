@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
-
+	
 	//make this son of a bitch a singleton
 	#region Singleton
 	private static GameManager instance;
@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour {
 	}
 	#endregion
 
+	public Text m_MoneyText;
+
+	//Meat variables
+	public float m_MoveSpeed = 100;
+
 	//record game time
 	private float m_InitTime;
 	private float m_EndTime;
@@ -28,6 +33,17 @@ public class GameManager : MonoBehaviour {
 	//money the player currently has
 	[SerializeField]
 	private float m_Money;
+	private float Money
+	{
+		get{
+			return m_Money;
+		}
+
+		set{
+			m_Money=value;
+			m_MoneyText.text=m_Money.ToString();
+		}
+	}
 
 	//test to see if game has ended
 	private bool m_IsGameOver = false;
@@ -46,9 +62,9 @@ public class GameManager : MonoBehaviour {
 
 	public bool SpendMoney(float _amount)
 	{
-		if(m_Money >= _amount) //test to see if money is sufficient
+		if(Money >= _amount) //test to see if money is sufficient
 		{
-			m_Money -= _amount;
+			Money -= _amount;
 			return true;  //take money away and return true
 		}
 		else
@@ -67,7 +83,7 @@ public class GameManager : MonoBehaviour {
 
 	public void AddMoney(float _amount)
 	{
-		m_Money += _amount; //add new funds to total
+		Money += _amount; //add new funds to total
 	}
 
 	public void StartGame()
@@ -100,7 +116,7 @@ public class GameManager : MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
-
+	
 	public void IncrementBonusPoints(float _increment)
 	{
 		m_BonusPoints += _increment;
@@ -110,5 +126,4 @@ public class GameManager : MonoBehaviour {
 	{
 		m_BonusPoints -= _increment;
 	}
-
 }

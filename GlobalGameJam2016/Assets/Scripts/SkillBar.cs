@@ -11,9 +11,9 @@ public class SkillBar : MonoBehaviour {
 	[SerializeField]
 	private float m_MaxValue;
 
-	//max value of bar
+	//min value of bar
 	[SerializeField]
-	private float m_MinValue;
+	private float m_MinValue=1;
 
 	//value of the skill bar
 	[SerializeField]
@@ -72,18 +72,20 @@ public class SkillBar : MonoBehaviour {
 	//getter used by GameManager
 	public float GetValue()
 	{
-		return m_Value;
+		if (m_Value == 0)
+			return m_MinValue;
+		return m_Value*m_MaxValue;
 	}
 
 	//add amount to value if higher than max, make it max
 	public void IncreaseValue()
 	{
 		//spend money to increment
-		if(GameManager.Instance.SpendMoney(m_Cost))
+		if(m_Value < 1)
 		{
-			if(m_Value < m_MaxValue)
+			if(GameManager.Instance.SpendMoney(m_Cost))
 			{
-				m_Value = Mathf.Min(m_Value + m_Increment,m_MaxValue);
+				m_Value = Mathf.Min(m_Value + m_Increment,1);
 			}
 		}
 	}
@@ -91,9 +93,9 @@ public class SkillBar : MonoBehaviour {
 	//subtract amount from value if less than 0, make it 0
 	public void DecreaseValue(float _amount)
 	{
-		if(m_Value > m_MinValue)
+		if(m_Value > 0)
 		{
-			m_Value = Mathf.Max(m_Value - _amount,m_MinValue);
+			m_Value = Mathf.Max(m_Value - _amount,0);
 		}
 	}
 
@@ -123,6 +125,8 @@ public class SkillBar : MonoBehaviour {
 	//gets called when the button is Down
 	public void OnBtnDown()
 	{
+		if(GameManager.Instance.IsGameOver())
+			return;
 		GetNewKey();
 		StartCoroutine(CheckIncrease(m_CoroutineKey));
 	}
@@ -130,6 +134,8 @@ public class SkillBar : MonoBehaviour {
 	//gets called when the button is up
 	public void OnBtnUp()
 	{
+		if(GameManager.Instance.IsGameOver())
+			return;
 		GetNewKey();
 	}
 }
