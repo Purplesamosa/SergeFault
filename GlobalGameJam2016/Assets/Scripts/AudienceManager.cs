@@ -87,6 +87,7 @@ public class AudienceManager : GGJBase {
 		while (!GameManager.Instance.IsGameOver()) 
 		{
 			m_SpawnRate=Random.Range(m_MinSpawnRate*(1/GameManager.Instance.GetBarValue(0)),m_MaxSpawnRate*(1/GameManager.Instance.GetBarValue(0)));
+			Debug.Log("ESPERAR: "+m_SpawnRate+" BAR: "+GameManager.Instance.GetBarValue(0));
 			//Spawn fresh meat delay
 			yield return new WaitForSeconds(m_SpawnRate);
 			if(m_FreshMeats.Count>0)

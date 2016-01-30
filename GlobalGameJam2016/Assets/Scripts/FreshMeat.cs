@@ -89,7 +89,6 @@ public class FreshMeat : GGJBase {
 	{
 		Disappear ();
 		//TODO: apply the ritual animation
-		Debug.Log ("Die bitch die!!");
 		return m_Faith;
 	}
 
