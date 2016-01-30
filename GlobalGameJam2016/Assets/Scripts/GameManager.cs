@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
 	private float m_EndTime;
 	private float m_SessionLength;
 
-	//points
+	//Used to fight the boss
 	public float m_BonusPoints;
 	public float m_RitualPoints;
 
@@ -100,4 +100,18 @@ public class GameManager : MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	public void IncrementBonusPoints(float _increment)
+	{
+		m_BonusPoints += _increment;
+	}
+
+	public void DecrementBonusPoints(float _increment)
+	{
+		m_BonusPoints -= _increment;
+	}
+
+>>>>>>> Development
 }
