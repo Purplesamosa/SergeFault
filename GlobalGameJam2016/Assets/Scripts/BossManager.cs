@@ -37,9 +37,9 @@ public class BossManager: MonoBehaviour {
 	private bool m_SafeZone = true;
 	private float m_TotalAnger = 60F;
 	[SerializeField]
-	private float m_AngerIncrement = 0.1F;
+	private float m_AngerIncrement = 1;
 	[SerializeField]
-	private float m_IncrementRate = 0.1F;
+	private float m_IncrementRate = 1;
 	[SerializeField]
 	private float m_CurrentAnger;
 
