@@ -37,7 +37,8 @@ public class AudienceManager : GGJBase {
 	private float m_MaxFaithDenominator=1.25f;
 
 	private float m_SpawnRate;
-
+	private float m_CollectRate=1;
+	private float m_Donations = 0;
 
 	private float m_FullHouseDelay=0.5f;
 	
@@ -47,13 +48,32 @@ public class AudienceManager : GGJBase {
 
 	public void InitializeGame()
 	{
-		StartCoroutine (OnTick ());
+		StartCoroutine (SpawnTick ());
+		StartCoroutine (CollectTick ());
 	}
 
-	IEnumerator OnTick()
+	IEnumerator CollectTick()
+	{
+		while (!GameManager.Instance.IsGameOver()) 
+		{
+
+			//Spawn fresh meat delay
+			yield return new WaitForSeconds(m_CollectRate);
+			if(m_UsedMeats.Count>0)
+			{
+				m_Donations=0;
+				for(int i=0;i<m_UsedMeats.Count;i++)
+					m_Donations+=m_UsedMeats[i].ChargeDonation();
+				GameManager.Instance.AddMoney(m_Donations);
+			}
+		}
+	}
+
+	IEnumerator SpawnTick()
 	{
 		while (true) 
 		{
+			m_SpawnRate=Random.Range(m_MinSpawnRate,m_MaxSpawnRate)*((100+GameManager.Instance.GetBarValue(0))/100);
 			//Spawn fresh meat delay
 			yield return new WaitForSeconds(m_SpawnRate);
 			if(m_FreshMeats.Count>0)
@@ -97,6 +117,7 @@ public class AudienceManager : GGJBase {
 		if (idToRetrieve != -1) 
 		{
 			m_FreshMeats.Add(m_UsedMeats[idToRetrieve]);
+			m_Locations.Add(m_UsedMeats[idToRetrieve]);
 			m_UsedMeats.RemoveAt(idToRetrieve);
 		}
 	}

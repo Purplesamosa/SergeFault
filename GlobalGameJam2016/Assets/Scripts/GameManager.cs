@@ -2,26 +2,7 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-<<<<<<< HEAD
-	static private GameManager instance;
-	static public GameManager Instance
-	{
-		get{
-			return instance;
-		}
-	}
-
-	void Awake()
-	{
-		instance = this;
-	}
-
-	public float GetBarValue()
-	{
-		return 0.5f;
-	}
-=======
-
+	
 	//make this son of a bitch a singleton
 	#region Singleton
 	private static GameManager instance;
@@ -119,6 +100,4 @@ public class GameManager : MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
-
->>>>>>> Development
 }

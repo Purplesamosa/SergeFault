@@ -3,6 +3,9 @@ using System.Collections;
 
 public class FreshMeat : GGJBase {
 
+	private delegate void MoveCallback();
+	private MoveCallback m_MoveCallback;
+
 	public int m_Id;
 	private bool m_LocationReached=false;
 	public RectTransform m_LocationRef;
@@ -39,6 +42,7 @@ public class FreshMeat : GGJBase {
 	public void MoveToSeat()
 	{
 		m_RectT.anchoredPosition = new Vector2 (m_LocationRef.anchoredPosition.x, AudienceManager.Instance.GetInitialYPos ());
+		m_MoveCallback += SeatReached;
 		StartCoroutine (MoveToLocation ());
 	}
 
@@ -60,6 +64,27 @@ public class FreshMeat : GGJBase {
 		}
 	}
 
+	public void RitualAssistance()
+	{
+		DecreaseFaith ();
+	}
+
+	public float ApplyRitual()
+	{
+		Disappear ();
+		//TODO: apply the ritual animation
+		Debug.Log ("Die bitch die!!");
+		return m_Faith;
+	}
+
+	public float ChargeDonation()
+	{
+		if (m_LocationReached) 
+		{
+			return m_Money;
+		}
+	}
+
 	private void DecreaseFaith()
 	{
 		m_Faith = Mathf.Max (m_Faith-m_FaithDecrement,0);
@@ -73,6 +98,26 @@ public class FreshMeat : GGJBase {
 	{
 		m_LocationReached=false;
 		m_LocationVector=AudienceManager.Instance.GetExitPosition();
+		m_MoveCallback += SceneLeft;
 		StartCoroutine (MoveToLocation ());
+	}
+
+	private void SeatReached()
+	{
+		m_MoveCallback -= SeatReached;
+		Debug.Log ("Seat Reached by Meat: " + m_Id);
+	}
+
+	private void SceneLeft()
+	{
+		m_MoveCallback -= SceneLeft;
+		Debug.Log ("Scene Left by Meat: " + m_Id);
+		Disappear ();
+	}
+
+	private void Disappear()
+	{
+		m_RectT.anchoredPosition = AudienceManager.Instance.GetExitPosition();
+		AudienceManager.Instance.RetrieveMeat (m_Id);
 	}
 }
