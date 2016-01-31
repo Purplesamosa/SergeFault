@@ -11,7 +11,10 @@ public class SkillBar : MonoBehaviour {
 	[SerializeField]
 	private AudioManager.SfxLoop m_SliderEnum;
 
+	#region PARTICLE_CONTROL
 	public ParticleSystem m_LvlUpParticles;
+	public ParticleSystem m_LootFx;
+	#endregion
 	private int m_Level = 0;
 
 	//the price to use the button to increase the value each level (3 possibles)
@@ -27,15 +30,7 @@ public class SkillBar : MonoBehaviour {
 		}
 		return false;
 	}
-
-	void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			DropLevel();
-		}
-	}
-
+	
 	//gets called when the button is Down
 	public void OnBtnDown()
 	{
@@ -56,7 +51,10 @@ public class SkillBar : MonoBehaviour {
 
 	public int GetLevel()
 	{
-		return m_Level;
+		if(m_Level<3)
+			return m_Level;
+
+		return 2;
 	}
 
 	public float GetBonus()
@@ -64,11 +62,14 @@ public class SkillBar : MonoBehaviour {
 		return m_Bonus[GetLevel()];
 	}
 
-	public void DropLevel()
+	public bool DropLevel()
 	{
 		if(m_Level > 0)
 		{
 			m_Balls[--m_Level].color = Color.grey;
+			m_LootFx.Play (true);
+			return true;
 		}
+		return false;
 	}
 }
