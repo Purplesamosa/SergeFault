@@ -47,7 +47,16 @@ public class BossManager: MonoBehaviour {
 	private float m_IncrementRate = 1;
 	[SerializeField]
 	private float m_CurrentAnger;
+<<<<<<< HEAD
 	
+=======
+	[SerializeField]
+	private float m_SizeStep;
+
+	public float m_VisualAnger=0;
+	private float m_SmoothSpeed = 1;
+
+>>>>>>> Development
 	public void deactivateSafeZone(){
 		m_SafeZone = false;
 	}
@@ -65,11 +74,25 @@ public class BossManager: MonoBehaviour {
 				GameManager.Instance.LoseGame();
 		}
 	}
+<<<<<<< HEAD
 	
 	public void penaltyGodStep(float _value){
 		m_CurrentAnger = Mathf.Min ( m_CurrentAnger + _value,m_TotalAnger);
 		if(m_CurrentAnger >= m_TotalAnger)
 			GameManager.Instance.LoseGame();
+=======
+
+	public void penaltyGodStep(){
+		m_CurrentAnger = Mathf.Min ( m_CurrentAnger + m_SizeStep,m_TotalAnger);
+		if(m_CurrentAnger >= m_TotalAnger)
+			GameManager.Instance.LoseGame();
+	}
+
+	public void BossFeedbackUpdate(){
+		m_VisualAnger+=(m_CurrentAnger-m_VisualAnger)*m_SmoothSpeed*Time.deltaTime;
+		m_Slider.value = m_VisualAnger;
+		m_Appearance.m_Completion = m_VisualAnger / m_TotalAnger;//Mathf.Pow(m_VisualAnger/m_TotalAnger,3);
+>>>>>>> Development
 	}
 	
 	public void BossFeedbackUpdate(){
@@ -97,6 +120,7 @@ public class BossManager: MonoBehaviour {
 		StartCoroutine ("Tick");
 	}
 
+<<<<<<< HEAD
 
 	public GameObject StartButton,GameTitle;
 	private IEnumerator fadeGameTitle(){
@@ -109,6 +133,28 @@ public class BossManager: MonoBehaviour {
 		}
 		Destroy (GameTitle);
 	}
+=======
+	//MOVE THIS TO GAMEMANAGER!!
+	/*
+	GameObject GameTitle, StartButton;
+	private IEnumerator fadeGameTitle(){
+		var temp = Renderer.GetComponent<Material> ().color;
+		float _time = 2.0F;
+		while(temp.a >0 ){
+			temp.a -= Time.deltaTime/_time;
+			Renderer.GetComponent<Material>().color = temp;
+		}
+		yield return 0;
+	}
+	
+	private void StartGameButtonDown(){
+		Destroy (StartButton);
+		StartCoroutine("fadeGameTitle");
+		GameStarted ();
+	}
+	*/
+	//UNTIL HEREEEEE!!
+>>>>>>> Development
 
 	// Use this for initialization
 	void Start () 
