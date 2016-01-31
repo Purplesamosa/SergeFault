@@ -116,6 +116,7 @@ public class AudienceManager : GGJBase {
 
 	public Penalty GetRandomPenalty()
 	{
+		return Penalty.Loot_Small;
 		int randVal=Random.Range(0,101);
 		
 		if(randVal<=m_SmallPenaltyChances[m_SmallPenaltyChancesIDx])
@@ -194,18 +195,18 @@ public class AudienceManager : GGJBase {
 		GameManager.Instance.AddMoney (m_Donations);
 	}
 
-	private void DecrementWill()
+	private void DecrementWill(int _idx=-1)
 	{
 		//decrement the will to all living minions on the front at the moment of the ritual
 		for (int i=0; i<m_Minions.Length; i++) 
 		{
 			if(!m_Minions[i].m_Alive)
 				continue;
-			m_Minions[i].DecreaseWill(m_WillDecrement);
+			m_Minions[i].DecreaseWill(m_WillDecrement,_idx==i);
 		}
 	}
 
-	private void DecreaseWillToARandomMinion()
+	private void DecreaseWillToARandomMinion(int _idx=-1)
 	{
 
 		//decrement the will to all living minions on the front at the moment of the ritual
@@ -213,8 +214,7 @@ public class AudienceManager : GGJBase {
 		{
 			if(!m_Minions[i].m_Alive||m_Minions[i].GetWill()==0)
 				continue;
-			Debug.Log("TARGET: "+i);
-			m_Minions[i].DecreaseWill(m_WillDecrement);
+			m_Minions[i].DecreaseWill(m_WillDecrement,_idx==i);
 			break;
 		}
 	}
@@ -225,7 +225,7 @@ public class AudienceManager : GGJBase {
 		{
 			if(!m_Minions[i].m_Alive||m_Minions[i].GetWill()>0)
 				continue;
-			ApplyPenalty(m_Minions[i].GetPenalty());
+			ApplyPenalty(m_Minions[i].GetPenalty(),i);
 			RetreatMinion(i);
 			return true;
 		}
@@ -241,7 +241,7 @@ public class AudienceManager : GGJBase {
 		}
 	}
 
-	private void ApplyPenalty(Penalty _penalty)
+	private void ApplyPenalty(Penalty _penalty,int _idx)
 	{
 		switch(_penalty)
 		{
@@ -255,11 +255,12 @@ public class AudienceManager : GGJBase {
 			break;
 
 			case Penalty.Difamation_Small: //remove -1 will to 1 random minions
-				DecreaseWillToARandomMinion();
+				m_Minions[_idx].m_DifamationFx.Play(true);
+				DecreaseWillToARandomMinion(_idx);
 			break;
 			case Penalty.Difamation_Big: //remove -1 will to all minions
-			Debug.Log("QUE PITOS");
-				DecrementWill();
+				m_Minions[_idx].m_DifamationFx.Play(true);
+				DecrementWill(_idx);
 			break;
 
 			case Penalty.Blasfemy_Small: //add a small amount of rage to the GOD
@@ -286,7 +287,11 @@ public class AudienceManager : GGJBase {
 				GameManager.Instance.m_SkillBars[i].DropLevel();
 			}
 		} else {
-			GameManager.Instance.m_SkillBars[Random.Range(0,GameManager.Instance.m_SkillBars.Length)].DropLevel();
+			for(int i=0;i<GameManager.Instance.m_SkillBars.Length;i++)
+			{
+				if(GameManager.Instance.m_SkillBars[i].DropLevel())
+					return;
+			}
 		}
 	}
 

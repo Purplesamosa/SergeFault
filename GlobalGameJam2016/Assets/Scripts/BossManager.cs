@@ -14,6 +14,10 @@ public class BossManager: MonoBehaviour {
 		}
 	}
 	#endregion
+
+	#region PARTICLES_CONTROL
+	public ParticleSystem m_GodsWrathFx;
+	#endregion
 	
 	void Awake()
 	{
@@ -75,6 +79,7 @@ public class BossManager: MonoBehaviour {
 
 	public void penaltyGodStep(float _value){
 		m_CurrentAnger = Mathf.Min (m_CurrentAnger + _value, m_TotalAnger);
+		m_GodsWrathFx.Play (true);
 		if (m_CurrentAnger >= m_TotalAnger)
 			GameManager.Instance.LoseGame ();
 	}
