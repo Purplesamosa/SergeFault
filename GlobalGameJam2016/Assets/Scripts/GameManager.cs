@@ -18,6 +18,10 @@ public class GameManager : GGJBase {
 	}
 	#endregion
 
+	#region PARTICLES_CONTROL
+	public ParticleSystem m_LoseInvestmentFX;
+	#endregion
+
 	private bool m_GameStarted = false;
 
 	public StatuePulse[] m_StatuePulses;
@@ -68,11 +72,13 @@ public class GameManager : GGJBase {
 		return m_IsGameOver;
 	}
 
-	public bool SpendMoney(float _amount,bool _forceSpend=false)
+	public bool SpendMoney(float _amount,bool _loseInvest=false)
 	{
 		if(Money >= _amount) //test to see if money is sufficient
 		{
 			Money -= _amount;
+			if(_loseInvest)
+				m_LoseInvestmentFX.Play(true);
 
 			for (int i=0; i<m_StatuePulses.Length; i++) 
 			{
@@ -86,9 +92,10 @@ public class GameManager : GGJBase {
 		}
 		else
 		{
-			if(_forceSpend)
+			if(_loseInvest)
 			{
 				Money=0;
+				m_LoseInvestmentFX.Play(true);
 
 				for (int i=0; i<m_StatuePulses.Length; i++) 
 				{

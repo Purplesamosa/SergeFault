@@ -5,6 +5,16 @@ using TMPro;
 
 public class Minion : GGJBase {
 
+	#region ANIMATION_CONTROL
+	[SerializeField]
+	private Animator m_Animator;
+	#endregion
+
+	#region PARTICLES_CONTROL
+	public ParticleSystem m_WillLoseParticles;
+	public ParticleSystem m_DifamationFx;
+	#endregion
+
 	#region MINION_VARIABLES
 	public int m_IDx;
 	public bool m_Alive=false;
@@ -55,6 +65,10 @@ public class Minion : GGJBase {
 		//Initialize variables
 		m_Type = _type;
 
+		m_Animator.SetBool ("NoFaith", false);
+		m_Animator.SetInteger ("Type", (int)_type);
+
+
 		m_Penalty = AudienceManager.Instance.GetRandomPenalty ();
 		//Get cur limits
 		AudienceManager.Instance.GetMoneyLimits (m_Type, out m_MinMoney, out m_MaxMoney);
@@ -89,6 +103,9 @@ public class Minion : GGJBase {
 		m_MoveCallback += FrontLeft;
 
 		m_Moving=true;
+
+		m_Animator.SetBool ("NoFaith", true);
+	
 		//leave the front
 		StartCoroutine (MoveToLocation ());
 	}
@@ -103,6 +120,7 @@ public class Minion : GGJBase {
 		//setup callback
 		m_MoveCallback += FrontReached;
 		m_Moving = true;
+		m_Animator.SetBool ("ToLife", true);
 		//move to the front
 		StartCoroutine (MoveToLocation ());
 	}
@@ -141,6 +159,7 @@ public class Minion : GGJBase {
 			BossManager.Instance.deactivateSafeZone ();
 		}
 		m_MoveCallback -= FrontReached;
+		m_Animator.SetBool ("ToLife", false);
 		//m_Moving = false;
 		m_Alive = true;
 	}
@@ -148,12 +167,17 @@ public class Minion : GGJBase {
 	private void FrontLeft()
 	{
 		m_MoveCallback -= FrontLeft;
+		m_Animator.SetBool ("NoFaith", false);
+		m_Animator.SetInteger ("Type", 4);
 		//m_Moving = false;
 		m_Alive = false;
 	}
 	
 	public void Disappear()
 	{
+		m_Animator.SetInteger ("Type", 4);
+		m_Animator.SetBool ("ToLife", false);
+		m_Animator.SetBool ("NoFaith", true);
 		///set it to initial position
 		m_RectT.anchoredPosition = new Vector2 (m_LocationRef.anchoredPosition.x, AudienceManager.Instance.GetInitialYPos ());
 	}
@@ -182,14 +206,18 @@ public class Minion : GGJBase {
 	}
 
 	//Decrease Will in this minion, return true if there is a runner on the front Will=0
-	public bool DecreaseWill(float _amount)
+	public bool DecreaseWill(float _amount,bool _ignoreFX)
 	{
 		if (m_Moving)
 			return false;
+	
 		//decrease the Will value by _amount
 		m_Will= Mathf.Max (m_Will-_amount,0);
 		//update text for this variable
 		m_WillText.text = m_Will.ToString();
+
+		if(!_ignoreFX)
+			m_WillLoseParticles.Play (true);
 		//if there is no more will then this minion will leave the front
 		return m_Will == 0;
 	}
