@@ -22,13 +22,14 @@ public class AudienceManager : GGJBase {
 
 	public RectTransform m_BottomHelper;
 	public RectTransform m_TopHelper;
-
-	[SerializeField]
-	private Vector2 m_ExitPosition;
+	
 	[SerializeField]
 	private float m_InitialYPos=0;
 
 	private bool m_RitualInProgress=false;
+	
+	public Image m_BarSpawn;
+	private float m_SpawnTimePassed=0;
 
 	//TUNING: 
 	public float m_MinMoney=5;
@@ -36,8 +37,8 @@ public class AudienceManager : GGJBase {
 	public float m_MinFaith=2;
 	public float m_MaxFaith=5;
 	
-	private float m_MinSpawnRate=2;
-	private float m_MaxSpawnRate=4;
+	private float m_MinSpawnRate=7;
+	private float m_MaxSpawnRate=9;
 	private float m_TickRate=0.1f;
 	private float m_MaxMoneyDenominator=1.25f;
 	private float m_MaxFaithDenominator=1.25f;
@@ -49,6 +50,8 @@ public class AudienceManager : GGJBase {
 	public float m_FaithDecrement=1f;
 
 	private float m_FullHouseDelay=0.5f;
+
+
 	
 	void Awake () {
 		instance = this;
@@ -78,6 +81,7 @@ public class AudienceManager : GGJBase {
 				for(int i=0;i<m_UsedMeats.Count;i++)
 					m_Donations+=m_UsedMeats[i].ChargeDonation();
 				GameManager.Instance.AddMoney(m_Donations);
+				AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.MoneyChargeSound); //play the money sound
 			}
 		}
 	}
@@ -86,10 +90,28 @@ public class AudienceManager : GGJBase {
 	{
 		while (!GameManager.Instance.IsGameOver()) 
 		{
-			m_SpawnRate=Random.Range(m_MinSpawnRate*(1/GameManager.Instance.GetBarValue(0)),m_MaxSpawnRate*(1/GameManager.Instance.GetBarValue(0)));
-			Debug.Log("ESPERAR: "+m_SpawnRate+" BAR: "+GameManager.Instance.GetBarValue(0));
+
+//			m_SpawnRate=Random.Range(m_MinSpawnRate-GameManager.Instance.GetBarValue(0),m_MaxSpawnRate-GameManager.Instance.GetBarValue(0));
+			m_SpawnRate=Mathf.Max(m_SpawnRate,1);
 			//Spawn fresh meat delay
-			yield return new WaitForSeconds(m_SpawnRate);
+			if(GameManager.Instance.m_ItsFirstMadaFaka)
+			{
+				GameManager.Instance.m_ItsFirstMadaFaka=false;
+				GameManager.Instance.m_MovingFirstMadaFaka=true;
+				yield return new WaitForSeconds(0.5f);
+			}
+			else
+			{
+				m_SpawnTimePassed=0;
+				while(m_SpawnTimePassed<m_SpawnRate)
+				{
+				//	yield return new WaitForSeconds(m_SpawnRate);
+					yield return 0;
+					m_BarSpawn.fillAmount=m_SpawnTimePassed/m_SpawnRate;
+					m_SpawnTimePassed+=Time.deltaTime;
+				}
+				m_BarSpawn.fillAmount=0;
+			}
 			if(m_FreshMeats.Count>0)
 			{
 				SpawnFreshMeat();
@@ -141,7 +163,7 @@ public class AudienceManager : GGJBase {
 		return (MeatType)Random.Range(0,(int)MeatType.MAX);
 	}
 
-	public void GetMoneyLimits(out float _minVal,out float _maxVal)
+/*	public void GetMoneyLimits(out float _minVal,out float _maxVal)
 	{
 		_minVal=Mathf.Floor(m_MinMoney*GameManager.Instance.GetBarValue(1));
 		_maxVal=Mathf.Ceil(m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
@@ -150,9 +172,10 @@ public class AudienceManager : GGJBase {
 	public void GetFaithLimits(out float _minVal,out float _maxVal)
 	{
 		_minVal=Mathf.Floor(m_MinFaith*GameManager.Instance.GetBarValue(2));
+		//_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2));
 		_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
 	}
-
+*/
 	public void TryToRitual(int _idx)
 	{
 		//make ritual to the choosen one
@@ -177,10 +200,5 @@ public class AudienceManager : GGJBase {
 	public float GetInitialYPos()
 	{
 		return m_InitialYPos;
-	}
-
-	public Vector2 GetExitPosition()
-	{
-		return m_ExitPosition;
 	}
 }

@@ -16,7 +16,11 @@ public class GameManager : MonoBehaviour {
 	}
 	#endregion
 
+	private bool m_GameStarted = false;
+
 	public Text m_MoneyText;
+	public bool m_ItsFirstMadaFaka = true;
+	public bool m_MovingFirstMadaFaka=false;
 
 	//Meat variables
 	public float m_MoveSpeed = 100;
@@ -41,7 +45,7 @@ public class GameManager : MonoBehaviour {
 
 		set{
 			m_Money=value;
-			m_MoneyText.text=m_Money.ToString();
+		//	m_MoneyText.text=m_Money.ToString();
 		}
 	}
 
@@ -73,13 +77,22 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public bool GetGameStart()
+	{
+		return m_GameStarted;
+	}
+
+	public void GameStarted()
+	{
+		m_GameStarted = true;
+	}
+
 
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
-	public float GetBarValue(int _index)
+	public int GetBarLevel(int _index)
 	{
-		float temp=m_SkillBars[_index].GetValue();
-		return	temp;
+		return	m_SkillBars[_index].GetLevel();
 	}
 
 	public void AddMoney(float _amount)
@@ -98,6 +111,7 @@ public class GameManager : MonoBehaviour {
 		m_EndTime = Time.time;
 		m_SessionLength = m_EndTime - m_InitTime; //get length of session
 		m_IsGameOver = true; 
+		AudioManager.Instance.EndGame();
 	}
 
 	public float GetGameLength()
