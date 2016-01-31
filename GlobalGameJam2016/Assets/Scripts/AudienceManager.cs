@@ -91,7 +91,7 @@ public class AudienceManager : GGJBase {
 		while (!GameManager.Instance.IsGameOver()) 
 		{
 
-			m_SpawnRate=Random.Range(m_MinSpawnRate-GameManager.Instance.GetBarValue(0),m_MaxSpawnRate-GameManager.Instance.GetBarValue(0));
+//			m_SpawnRate=Random.Range(m_MinSpawnRate-GameManager.Instance.GetBarValue(0),m_MaxSpawnRate-GameManager.Instance.GetBarValue(0));
 			m_SpawnRate=Mathf.Max(m_SpawnRate,1);
 			//Spawn fresh meat delay
 			if(GameManager.Instance.m_ItsFirstMadaFaka)
@@ -163,7 +163,7 @@ public class AudienceManager : GGJBase {
 		return (MeatType)Random.Range(0,(int)MeatType.MAX);
 	}
 
-	public void GetMoneyLimits(out float _minVal,out float _maxVal)
+/*	public void GetMoneyLimits(out float _minVal,out float _maxVal)
 	{
 		_minVal=Mathf.Floor(m_MinMoney*GameManager.Instance.GetBarValue(1));
 		_maxVal=Mathf.Ceil(m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
@@ -175,7 +175,7 @@ public class AudienceManager : GGJBase {
 		//_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2));
 		_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
 	}
-
+*/
 	public void TryToRitual(int _idx)
 	{
 		//make ritual to the choosen one

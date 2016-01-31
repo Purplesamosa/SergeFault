@@ -42,8 +42,8 @@ public class FreshMeat : GGJBase {
 	{
 		m_Type = _type;
 		m_LocationReached = false;
-		AudienceManager.Instance.GetMoneyLimits (out m_MinMoney, out m_MaxMoney);
-		AudienceManager.Instance.GetFaithLimits (out m_MinFaith, out m_MaxFaith);
+//		AudienceManager.Instance.GetMoneyLimits (out m_MinMoney, out m_MaxMoney);
+//		AudienceManager.Instance.GetFaithLimits (out m_MinFaith, out m_MaxFaith);
 		m_Money = Mathf.Ceil (Random.Range (m_MinMoney, m_MaxMoney));
 		m_Faith = Mathf.Floor(Random.Range (m_MinFaith, m_MaxFaith));
 
