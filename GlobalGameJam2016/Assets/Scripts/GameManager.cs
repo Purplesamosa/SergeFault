@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 	}
 	#endregion
 
+	private bool m_GameStarted = false;
+
 	public Text m_MoneyText;
 	public bool m_ItsFirstMadaFaka = true;
 	public bool m_MovingFirstMadaFaka=false;
@@ -73,6 +75,11 @@ public class GameManager : MonoBehaviour {
 		{
 			return false; //not enough money
 		}
+	}
+
+	public void GameStarted()
+	{
+		m_GameStarted = true;
 	}
 
 
