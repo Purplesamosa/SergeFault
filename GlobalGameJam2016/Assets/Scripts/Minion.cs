@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class Minion : GGJBase {
 
@@ -27,7 +28,7 @@ public class Minion : GGJBase {
 
 
 	#region MOVEMENT_VARIABLES
-	private bool m_Moving=false;
+	public bool m_Moving=false;
 	public RectTransform m_LocationRef;
 	public Vector2 m_LocationVector;
 
@@ -41,11 +42,11 @@ public class Minion : GGJBase {
 
 	#endregion
 
-
 	#region TEXT_FILES
-	public Text m_MoneyText;
-	public Text m_FaithText;
-	public Text m_WillText;
+	public TextMeshProUGUI m_MoneyText;
+	public TextMeshProUGUI m_FaithText;
+	public TextMeshProUGUI m_WillText;
+	public TextMeshProUGUI m_PenaltyText;
 	#endregion
 
 	#region SPAWN_INITIALIZE
@@ -54,24 +55,26 @@ public class Minion : GGJBase {
 		//Initialize variables
 		m_Type = _type;
 
+		m_Penalty = AudienceManager.Instance.GetRandomPenalty ();
 		//Get cur limits
 		AudienceManager.Instance.GetMoneyLimits (m_Type, out m_MinMoney, out m_MaxMoney);
 		AudienceManager.Instance.GetFaithLimits (m_Type, out m_MinFaith, out m_MaxFaith);
 		AudienceManager.Instance.GetWillLimits (m_Type, out m_MinWill, out m_MaxWill);
-		
+
 		//Round values to integers
-		m_Money = Mathf.Ceil (Random.Range (m_MinMoney, m_MaxMoney));
-		m_Faith = Mathf.Ceil (Random.Range (m_MinFaith, m_MaxFaith));
-		m_Will = Mathf.Ceil (Random.Range (m_MinWill, m_MaxWill));
+		m_Money = Mathf.Floor (Random.Range (m_MinMoney, m_MaxMoney)+GameManager.Instance.GetMoneyBonus(m_Type));
+		m_Faith = Mathf.Floor (Random.Range (m_MinFaith, m_MaxFaith)+GameManager.Instance.GetFaithBonus(m_Type));
+		m_Will = Mathf.Floor (Random.Range (m_MinWill, m_MaxWill)+GameManager.Instance.GetWillBonus(m_Type));
 
 		//Assign values to the text TODO: add icons?
 		m_MoneyText.text = m_Money.ToString();
 		m_FaithText.text = m_Faith.ToString();
 		m_WillText.text = m_Will.ToString ();
+		m_PenaltyText.text = m_Penalty.ToString (); 
 
 		MoveToFront ();
 	}
-	#region
+	#endregion
 
 
 	#region MOVING_FUNCTIONS
@@ -79,24 +82,27 @@ public class Minion : GGJBase {
 
 	public void LeaveTheFront()
 	{
-		m_Moving=true;
+
 		//retrieve the minion from the front
 		m_LocationVector = new Vector2 (m_LocationVector.x, AudienceManager.Instance.GetInitialYPos ());
 		//setup callback
 		m_MoveCallback += FrontLeft;
+
+		m_Moving=true;
 		//leave the front
 		StartCoroutine (MoveToLocation ());
 	}
 
 	public void MoveToFront()
 	{
-		m_Moving = true;
+
 		//Move the minion to the front
 		m_LocationVector = new Vector2(m_LocationRef.anchoredPosition.x,AudienceManager.Instance.GetRandomHeight());
 		///set it to initial position
 		m_RectT.anchoredPosition = new Vector2 (m_LocationRef.anchoredPosition.x, AudienceManager.Instance.GetInitialYPos ());
 		//setup callback
 		m_MoveCallback += FrontReached;
+		m_Moving = true;
 		//move to the front
 		StartCoroutine (MoveToLocation ());
 	}
@@ -106,15 +112,17 @@ public class Minion : GGJBase {
 		//while the minion is moving and the game still running
 		while(m_Moving&&!GameManager.Instance.IsGameOver())
 		{
+			//Debug.Log("SIGO: "+m_IDx);
 			//wait for a frame
 			yield return 0;
 			//validate snap distance
 			if(Vector2.Distance(m_RectT.anchoredPosition,m_LocationVector)<m_MinDistanceToReach)
 			{
-				//callback
-				m_MoveCallback();
-				//fix position to the final position
-				m_RectT.anchoredPosition=m_LocationVector;
+					//callback
+					m_MoveCallback();
+					m_Moving=false;
+					//fix position to the final position
+					m_RectT.anchoredPosition=m_LocationVector;
 			}else
 			{
 				//get move direction and normalize this direction
@@ -133,14 +141,21 @@ public class Minion : GGJBase {
 			BossManager.Instance.deactivateSafeZone ();
 		}
 		m_MoveCallback -= FrontReached;
-		m_Moving = false;
+		//m_Moving = false;
+		m_Alive = true;
 	}
 	
 	private void FrontLeft()
 	{
 		m_MoveCallback -= FrontLeft;
-		m_Moving = false;
-		AudienceManager.Instance.ResetMinion (m_IDx);
+		//m_Moving = false;
+		m_Alive = false;
+	}
+	
+	public void Disappear()
+	{
+		///set it to initial position
+		m_RectT.anchoredPosition = new Vector2 (m_LocationRef.anchoredPosition.x, AudienceManager.Instance.GetInitialYPos ());
 	}
 
 	#endregion
@@ -170,7 +185,7 @@ public class Minion : GGJBase {
 	public bool DecreaseWill(float _amount)
 	{
 		if (m_Moving)
-			return;
+			return false;
 		//decrease the Will value by _amount
 		m_Will= Mathf.Max (m_Will-_amount,0);
 		//update text for this variable

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: cd0c72b0349a14c099b430b8f160a93c
-timeCreated: 1454195215
+timeCreated: 1454217763
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,6 +23,9 @@ TextureImporter:
     21300032: Pig_0
     21300034: Pig_1
     21300036: Pig_2
+    21300038: Willpower
+    21300040: Faith
+    21300042: Money
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -255,6 +258,36 @@ TextureImporter:
         y: 25
         width: 66
         height: 63
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Willpower
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 322
+        width: 170
+        height: 160
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Faith
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 180
+        width: 178
+        height: 140
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Money
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 1
+        width: 178
+        height: 177
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

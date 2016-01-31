@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: fb29b7581cd49a943bd9c8f335f5edae
-timeCreated: 1454197317
-licenseType: Free
+timeCreated: 1454256825
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: Clouds_TopLeft
@@ -12,6 +12,17 @@ TextureImporter:
     21300010: Atlas fondo cajas 1024x1024_5
     21300012: Clouds_BottomRIght
     21300014: Clouds_Left
+    21300016: Cloud_Bottom
+    21300018: MONSTER
+    21300020: MONSTER_EYE
+    21300022: Work_Statue
+    21300024: Faith_Statue
+    21300026: Will_Statue
+    21300028: BG_Mountains
+    21300030: BG_FallenCity
+    21300032: BG_Buildings
+    21300034: BG_Road
+    21300036: Solid_Gray
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -61,9 +72,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 702
+        y: 1608
         width: 402
-        height: 322
+        height: 440
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -71,29 +82,29 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 404
-        y: 708
-        width: 346
-        height: 316
+        y: 1578
+        width: 361
+        height: 470
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Clouds_Right
       rect:
         serializedVersion: 2
-        x: 775
-        y: 692
-        width: 249
-        height: 332
+        x: 767
+        y: 1674
+        width: 267
+        height: 374
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: CLouds_BottomLeft
       rect:
         serializedVersion: 2
-        x: 796
-        y: 532
+        x: 642
+        y: 1084
         width: 228
-        height: 159
+        height: 269
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -101,9 +112,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 988
         width: 640
-        height: 478
+        height: 588
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,25 +126,135 @@ TextureImporter:
         width: 30
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Clouds_BottomRIght
       rect:
         serializedVersion: 2
-        x: 845
-        y: 336
+        x: 642
+        y: 1355
         width: 179
-        height: 194
+        height: 221
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Clouds_Left
       rect:
         serializedVersion: 2
-        x: 763
-        y: 0
-        width: 261
-        height: 327
+        x: 1036
+        y: 1708
+        width: 272
+        height: 340
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Cloud_Bottom
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1581
+        width: 425
+        height: 86
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MONSTER
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 555
+        width: 640
+        height: 427
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MONSTER_EYE
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 499
+        width: 65
+        height: 55
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Work_Statue
+      rect:
+        serializedVersion: 2
+        x: 1458
+        y: 1876
+        width: 171
+        height: 172
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Faith_Statue
+      rect:
+        serializedVersion: 2
+        x: 1658
+        y: 1878
+        width: 133
+        height: 170
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Will_Statue
+      rect:
+        serializedVersion: 2
+        x: 1813
+        y: 1876
+        width: 155
+        height: 172
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BG_Mountains
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1395
+        width: 641
+        height: 478
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BG_FallenCity
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 1152
+        width: 459
+        height: 241
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BG_Buildings
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 912
+        width: 641
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BG_Road
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 627
+        width: 641
+        height: 283
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Solid_Gray
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 1600
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
