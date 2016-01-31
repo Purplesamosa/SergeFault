@@ -5,7 +5,7 @@ using System.Collections;
 public class SkillBar : MonoBehaviour {
 
 	[SerializeField]
-	private Image m_Slider;
+	private Image[] m_Balls;
 
 	//ID used to call the correct music
 	[SerializeField]
@@ -17,17 +17,28 @@ public class SkillBar : MonoBehaviour {
 	public float[] m_Costs;
 
 
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			DropLevel();
+		}
+	}
+
 	//gets called when the button is Down
 	public void OnBtnDown()
 	{
-		TryToLevelUp();
+		if(m_Level < 3)
+		{
+			TryToLevelUp();
+		}
 	}
 
 	private void TryToLevelUp()
 	{
 		if(GameManager.Instance.SpendMoney(m_Costs[m_Level]))
 		{
-			++m_Level;
+			m_Balls[m_Level++].color = Color.red;
 		}
 	}
 
@@ -38,6 +49,9 @@ public class SkillBar : MonoBehaviour {
 
 	public void DropLevel()
 	{
-		--m_Level;
+		if(m_Level > 0)
+		{
+			m_Balls[--m_Level].color = Color.grey;
+		}
 	}
 }

@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 
 		set{
 			m_Money=value;
-			m_MoneyText.text=m_Money.ToString();
+		//	m_MoneyText.text=m_Money.ToString();
 		}
 	}
 
