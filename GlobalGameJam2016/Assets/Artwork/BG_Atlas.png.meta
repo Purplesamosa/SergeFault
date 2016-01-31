@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: fb29b7581cd49a943bd9c8f335f5edae
-timeCreated: 1454256825
+timeCreated: 1454257573
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -251,8 +251,8 @@ TextureImporter:
     - name: Solid_Gray
       rect:
         serializedVersion: 2
-        x: 634
-        y: 1600
+        x: 892
+        y: 1608
         width: 16
         height: 16
       alignment: 0
