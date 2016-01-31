@@ -116,7 +116,7 @@ public class AudienceManager : GGJBase {
 
 	public Penalty GetRandomPenalty()
 	{
-		return Penalty.Loot_Small;
+		return Penalty.Loot_Big;
 		int randVal=Random.Range(0,101);
 		
 		if(randVal<=m_SmallPenaltyChances[m_SmallPenaltyChancesIDx])
