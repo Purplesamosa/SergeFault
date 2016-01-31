@@ -20,16 +20,22 @@ public class AudioManager : MonoBehaviour
 	
 	public enum SfxLoop
 	{
-		Skillbar0 = 0,
-		Skillbar1 = 1,
-		Skillbar2 = 2,
-		SFX1
+
 	};
 
 	public enum SfxNoLoop
 	{
-		MoneyChargeSound,
-		KillVillagerSound
+		BTN_PLAY,
+		BTN_REPLAY,
+		GOD_GAMEOVER,
+		GOD_STEP_01,
+		GOD_STEP_04,
+		MACHINE_STARTS,
+		MACHINE_REWIND,
+		MACHINE_DOOROPEN,
+		STATUE_FAITH,
+		STATUE_WORK,
+		STATUE_WILL
 	};
 
 	public AudioSource m_Intro;
@@ -56,16 +62,24 @@ public class AudioManager : MonoBehaviour
 
 	private float m_MaxVolume = 1f;
 
-	void Start ()
+	void Start()
 	{
 		m_CurrentLayer = 0;
-
+		
 		m_SfxSlotAvailable = new bool[m_SfxSourcesNoLoop.Length];
-
+		
 		for(int i = 0; i < m_SfxSlotAvailable.Length; ++i)
 		{
 			m_SfxSlotAvailable[i] = true;
 		}
+
+		m_LoopedSound.Play ();
+		m_LoopedSound.loop = true;
+		m_LoopedSound.volume = m_MaxVolume;
+	}
+
+	public void FakeStart ()
+	{
 
 		m_SfxSlotsUsed = 0;
 
@@ -82,10 +96,6 @@ public class AudioManager : MonoBehaviour
 		StartCoroutine ("SfxTick");
 
 		m_BGLayerChanging = false;
-
-		m_LoopedSound.Play ();
-		m_LoopedSound.loop = true;
-		m_LoopedSound.volume = m_MaxVolume;
 		
 		m_Intro.Play ();
 		m_IntroFading = false;
@@ -101,14 +111,6 @@ public class AudioManager : MonoBehaviour
 		if(m_IntroFading) IntroFade();
 
 #if UNITY_EDITOR
-		if(Input.GetKeyDown(KeyCode.Q)) PlaySfxNoLoop(SfxNoLoop.MoneyChargeSound);
-
-		if(Input.GetKeyDown(KeyCode.W)) PlaySfxLoop(SfxLoop.Skillbar0);
-		if(Input.GetKeyUp(KeyCode.W)) StopSfxLoop(SfxLoop.Skillbar0);
-
-		if(Input.GetKeyDown(KeyCode.E)) PlaySfxLoop(SfxLoop.SFX1);
-		if(Input.GetKeyUp(KeyCode.E)) StopSfxLoop(SfxLoop.SFX1);
-
 		if(Input.GetKeyDown(KeyCode.KeypadPlus)) GoToLayer(m_CurrentLayer+1);
 		if(Input.GetKeyDown(KeyCode.KeypadMinus)) GoToLayer(m_CurrentLayer-1);
 #endif

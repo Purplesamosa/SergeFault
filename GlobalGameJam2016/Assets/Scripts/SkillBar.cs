@@ -9,7 +9,7 @@ public class SkillBar : MonoBehaviour {
 
 	//ID used to call the correct music
 	[SerializeField]
-	private AudioManager.SfxLoop m_SliderEnum;
+	private AudioManager.SfxNoLoop m_SliderEnum;
 
 	#region PARTICLE_CONTROL
 	public ParticleSystem m_LvlUpParticles;
@@ -25,7 +25,10 @@ public class SkillBar : MonoBehaviour {
 
 	public bool CanAffordIt(float _money)
 	{
-		if (m_Level < m_Costs.Length) {
+		if (m_Level < m_Costs.Length) 
+		{
+			if(m_Level==(m_Costs.Length-1))
+				return false;
 			return _money>=m_Costs[m_Level];
 		}
 		return false;
@@ -44,8 +47,10 @@ public class SkillBar : MonoBehaviour {
 	{
 		if(GameManager.Instance.SpendMoney(m_Costs[m_Level]))
 		{
-			m_Balls[m_Level++].color = Color.red;
+			m_Balls[m_Level++].enabled = true;
 			m_LvlUpParticles.Play(true);
+
+			AudioManager.Instance.PlaySfxNoLoop(m_SliderEnum);
 		}
 	}
 
@@ -66,8 +71,9 @@ public class SkillBar : MonoBehaviour {
 	{
 		if(m_Level > 0)
 		{
-			m_Balls[--m_Level].color = Color.grey;
+			m_Balls[--m_Level].enabled = false;
 			m_LootFx.Play (true);
+			GameManager.Instance.CheckForStatuePulse();
 			return true;
 		}
 		return false;

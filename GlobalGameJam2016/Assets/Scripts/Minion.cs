@@ -56,7 +56,7 @@ public class Minion : GGJBase {
 	public TextMeshProUGUI m_MoneyText;
 	public TextMeshProUGUI m_FaithText;
 	public TextMeshProUGUI m_WillText;
-	public TextMeshProUGUI m_PenaltyText;
+	public Image m_PenaltyIcon;
 	#endregion
 
 	#region SPAWN_INITIALIZE
@@ -84,7 +84,7 @@ public class Minion : GGJBase {
 		m_MoneyText.text = m_Money.ToString();
 		m_FaithText.text = m_Faith.ToString();
 		m_WillText.text = m_Will.ToString ();
-		m_PenaltyText.text = m_Penalty.ToString (); 
+		m_PenaltyIcon.sprite = GameManager.Instance.GetPenaltyICon (m_Penalty);
 
 		MoveToFront ();
 	}

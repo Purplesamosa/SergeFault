@@ -46,16 +46,21 @@ public class AudienceManager : GGJBase {
 	#endregion
 	
 	#region PENALTY_TUNNING
-	private float m_InvestmentToLoseSmall=100;
-	private float m_InvestmentToLoseBig=200;
+	private float m_InvestmentToLoseSmall=30;
+	private float m_InvestmentToLoseBig=60;
 
-	private float m_BlasfemyRageSmall=2;
-	private float m_BlasfemyRageBig=5;
+	private float m_BlasfemyRageSmall=5;
+	private float m_BlasfemyRageBig=10;
 
 
-	private int[] m_SmallPenaltyChances=new int[6]{100,90,60,40,20,0};
+	private int[] m_SmallPenaltyChances=new int[6]{95,80,60,40,20,0};
 	
 	private int m_SmallPenaltyChancesIDx=0;
+	#endregion
+
+	#region ANIM_CONTROL
+	public Animator m_GillotinaAnim;
+	public ParticleSystem m_BloodFX;
 	#endregion
 
 	#region SPAWN_CONTROL
@@ -116,7 +121,6 @@ public class AudienceManager : GGJBase {
 
 	public Penalty GetRandomPenalty()
 	{
-		return Penalty.Loot_Big;
 		int randVal=Random.Range(0,101);
 		
 		if(randVal<=m_SmallPenaltyChances[m_SmallPenaltyChancesIDx])
@@ -143,10 +147,6 @@ public class AudienceManager : GGJBase {
 
 	#region INITIALIZE
 	//TODO: call this when the initialization is needed
-	void Start()
-	{
-		InitializeGame ();
-	}
 
 	public void InitializeGame()
 	{
@@ -166,19 +166,28 @@ public class AudienceManager : GGJBase {
 
 	IEnumerator RitualSteps(int _idx)
 	{
+		m_GillotinaAnim.SetBool ("StartAnim", true);
+		AudioManager.Instance.PlaySfxNoLoop (AudioManager.SfxNoLoop.MACHINE_STARTS);
+
 		//if the minion is alive then apply a ritual to it
 		if (m_Minions [_idx].m_Alive) {
 			BossManager.Instance.DecreaseAnger (m_Minions [_idx].GetFaith ());
 			ResetMinion (_idx);
 		}
+
 		yield return 0;
 		DecrementWill ();
 		yield return new WaitForSeconds (1);
 		while(ResolvePenalties ())
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(0.5f);
 		CollectProfits ();
+		yield return new WaitForSeconds(4);
+		m_GillotinaAnim.SetBool ("ContinueAnim", true);
+		AudioManager.Instance.PlaySfxNoLoop (AudioManager.SfxNoLoop.MACHINE_REWIND);
 		yield return new WaitForSeconds(1);
 		ReturnToFront ();
+
+
 		m_RitualInProgress = false;
 	}
 

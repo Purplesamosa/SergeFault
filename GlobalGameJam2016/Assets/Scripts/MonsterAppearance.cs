@@ -16,6 +16,8 @@ public class MonsterAppearance : MonoBehaviour
 	public Image[] m_BG;
 	public Color m_BGTint;
 
+	public Color m_InitialColor;
+
 	public RectTransform m_Cloud_RT;
 	public RectTransform m_Cloud_LT;
 	public RectTransform m_Cloud_RM;
@@ -102,7 +104,7 @@ public class MonsterAppearance : MonoBehaviour
 		m_Cloud_LB.anchoredPosition = Vector2.Lerp (m_CLB_Pos, m_CLB_Dest, m_Lerp);
 		m_Cloud_T.anchoredPosition = Vector2.Lerp (m_CT_Pos, m_CT_Dest, m_Lerp);
 		for (int i=0; i<m_Cloud.Length; i++)
-			m_Cloud [i].color = Color.Lerp (Color.white, m_CloudTint,m_Lerp);
+			m_Cloud [i].color = Color.Lerp (m_InitialColor, m_CloudTint,m_Lerp);
 
 	}
 

@@ -30,21 +30,17 @@ public class BossManager: MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
-	
-	void Update()
-	{
-		//this is to test the tick system
-	}
+
 
 	public LightningBolt[] m_LightingBolt;
 	public MonsterAppearance m_MonsterAppearance;
 	public int m_Steps=12;
 	private int m_LastStep=0;
 
-	public Slider m_Slider;
+	public Image m_Slider;
 	
 	private bool m_SafeZone = true;
-	private float m_TotalAnger = 60F;
+	private float m_TotalAnger = 80F;
 	[SerializeField]
 	private float m_AngerIncrement = 1;
 	[SerializeField]
@@ -85,7 +81,7 @@ public class BossManager: MonoBehaviour {
 	}
 	
 	public void BossFeedbackUpdate(){
-		m_Slider.value = m_CurrentAnger;
+		m_Slider.fillAmount = m_CurrentAnger/m_TotalAnger;
 		//get current step
 		int curStep = Mathf.FloorToInt((m_CurrentAnger / m_TotalAnger)*m_Steps);
 		if (curStep != m_LastStep) 
@@ -96,6 +92,17 @@ public class BossManager: MonoBehaviour {
 				{
 					m_LightingBolt[i].GenerateBolt();
 				}
+				if(curStep==(m_Steps-1))
+					AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_STEP_04);
+				else
+				{
+					if(curStep==m_Steps)
+						AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_GAMEOVER);
+					else
+						AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_STEP_01);
+				}
+
+				AudioManager.Instance.GoToLayer(curStep);
 			}
 			m_MonsterAppearance.MoveToValue(Mathf.Pow((float)curStep/(float)m_Steps,2));
 
@@ -123,9 +130,8 @@ public class BossManager: MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () 
+	public void FakeStart () 
 	{
-		m_Slider.maxValue = m_TotalAnger;
 		m_CurrentAnger = 0;
 		StartCoroutine ("SafeZone");
 		deactivateSafeZone ();
