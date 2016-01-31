@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class AudienceManager : GGJBase {
 
+	#region SINGLETON_SHIT
+	//Singleton shit
 	static private AudienceManager instance;
 	static public AudienceManager Instance
 	{
@@ -13,50 +15,133 @@ public class AudienceManager : GGJBase {
 		}
 	}
 
-	[SerializeField]
-	private List<FreshMeat> m_FreshMeats=new List<FreshMeat>();
-	[SerializeField]
-	private List<FreshMeat> m_UsedMeats=new List<FreshMeat>();
-	[SerializeField]
-	private List<RectTransform> m_Locations=new List<RectTransform>();
-
-	public RectTransform m_BottomHelper;
-	public RectTransform m_TopHelper;
-	
-	[SerializeField]
-	private float m_InitialYPos=0;
-
-	private bool m_RitualInProgress=false;
-	
-	public Image m_BarSpawn;
-	private float m_SpawnTimePassed=0;
-
-	//TUNING: 
-	public float m_MinMoney=5;
-	public float m_MaxMoney=15;
-	public float m_MinFaith=2;
-	public float m_MaxFaith=5;
-	
-	private float m_MinSpawnRate=7;
-	private float m_MaxSpawnRate=9;
-	private float m_TickRate=0.1f;
-	private float m_MaxMoneyDenominator=1.25f;
-	private float m_MaxFaithDenominator=1.25f;
-
-	private float m_SpawnRate;
-	private float m_CollectRate=1;
-	private float m_Donations = 0;
-
-	public float m_FaithDecrement=1f;
-
-	private float m_FullHouseDelay=0.5f;
-
-
-	
 	void Awake () {
 		instance = this;
 	}
 
+	#endregion
+
+	#region MINIONDATA_VARIABLES
+	[SerializeField]
+	private Minion[] m_Minions;
+	[SerializeField]
+	private MinionData[] m_MinionsData;
+	#endregion
+
+	#region LOCATION_VARAIBLES
+	//helper that has the initial height for minions
+	public RectTransform m_BottomHelper;
+	//helper that has the max height for minion position on the front
+	public RectTransform m_TopHelper;
+	//helper that has the initial position for minion spawn
+	public RectTransform m_InitializeHelper;
+	#endregion
+	
+	#region PHASING_CONTROL
+	private bool m_RitualInProgress=false;
+	//the sum of all donations this after-ritual
+	private float m_Donations = 0;
+	//the amount of will to decrement on each ritual
+	private float m_WillDecrement=1f;
+	#endregion
+	
+	#region PENALTY_TUNNING
+	private float m_InvestmentToLoseSmall=100;
+	private float m_InvestmentToLoseBig=200;
+
+	private float m_BlasfemyRageSmall=2;
+	private float m_BlasfemyRageBig=5;
+
+
+	private int[] m_SmallPenaltyChances=new int[6]{100,90,60,40,20,0};
+	
+	private int m_SmallPenaltyChancesIDx=0;
+	#endregion
+
+	#region SPAWN_CONTROL
+	//Spawn all possible minions
+	private void SpawnMinions()
+	{
+		for (int i=0; i<m_Minions.Length; i++)
+		{
+			//if this minion is not alive then send it to the front
+			if(!m_Minions[i].m_Alive)
+			{
+				m_Minions[i].Spawn(GetRandomType());
+			}
+		}
+	}
+
+	//get money limits
+	public void GetMoneyLimits(MinionType _type, out float _minVal,out float _maxVal)
+	{
+		//TODO: agregar bonuse de las estatuas
+		_minVal=m_MinionsData[(int)_type].m_MinMoney;
+		_maxVal=m_MinionsData[(int)_type].m_MinMoney;
+	}
+
+	//get faith limits
+	public void GetFaithLimits(MinionType _type, out float _minVal,out float _maxVal)
+	{
+		//TODO: agregar bonuse de las estatuas
+		_minVal=m_MinionsData[(int)_type].m_MinFaith;
+		_maxVal=m_MinionsData[(int)_type].m_MaxFaith;
+	}
+
+	//get will limits
+	public void GetWillLimits(MinionType _type, out float _minVal,out float _maxVal)
+	{
+		//TODO: agregar bonuse de las estatuas
+		_minVal=m_MinionsData[(int)_type].m_MinWill;
+		_maxVal=m_MinionsData[(int)_type].m_MaxWill;
+	}
+
+	//return a random height between the helpers
+	public float GetRandomHeight()
+	{
+		return Random.Range (m_BottomHelper.anchoredPosition.y, m_TopHelper.anchoredPosition.y);
+	}
+
+	//return the initial height where the minions will be spawned
+	public float GetInitialYPos()
+	{
+		return m_InitializeHelper.anchoredPosition.y;
+	}
+
+	//TODO: change this to probabilities
+	private MinionType GetRandomType()
+	{
+		return (MinionType)Random.Range(0,(int)MinionType.MAX);
+	}
+
+	public Penalty GetRandomPenalty()
+	{
+		int randVal=Random.Range(0,101);
+		
+		if(randVal<=m_SmallPenaltyChances[m_SmallPenaltyChancesIDx])
+		{
+			m_SmallPenaltyChancesIDx++;
+			if(m_SmallPenaltyChancesIDx==m_SmallPenaltyChances.Length)
+				m_SmallPenaltyChancesIDx=1;  
+			return (Penalty)Random.Range(0,4);
+		}
+		else
+		{
+			m_SmallPenaltyChancesIDx=1;
+			return (Penalty)Random.Range(4,8);
+		}
+	}
+
+	public void ResetMinion(int _idx)
+	{
+		m_Minions [_idx].m_Alive=false;
+		m_Minions [_idx].Disappear ();
+	}
+	#endregion
+
+
+	#region INITIALIZE
+	//TODO: call this when the initialization is needed
 	void Start()
 	{
 		InitializeGame ();
@@ -64,141 +149,169 @@ public class AudienceManager : GGJBase {
 
 	public void InitializeGame()
 	{
-		StartCoroutine (SpawnTick ());
-		StartCoroutine (CollectTick ());
+		SpawnMinions ();
 	}
+	#endregion
 
-	IEnumerator CollectTick()
-	{
-		while (!GameManager.Instance.IsGameOver()) 
-		{
-
-			//Spawn fresh meat delay
-			yield return new WaitForSeconds(m_CollectRate);
-			if(m_UsedMeats.Count>0)
-			{
-				m_Donations=0;
-				for(int i=0;i<m_UsedMeats.Count;i++)
-					m_Donations+=m_UsedMeats[i].ChargeDonation();
-				GameManager.Instance.AddMoney(m_Donations);
-				AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.MoneyChargeSound); //play the money sound
-			}
-		}
-	}
-
-	IEnumerator SpawnTick()
-	{
-		while (!GameManager.Instance.IsGameOver()) 
-		{
-
-//			m_SpawnRate=Random.Range(m_MinSpawnRate-GameManager.Instance.GetBarValue(0),m_MaxSpawnRate-GameManager.Instance.GetBarValue(0));
-			m_SpawnRate=Mathf.Max(m_SpawnRate,1);
-			//Spawn fresh meat delay
-			if(GameManager.Instance.m_ItsFirstMadaFaka)
-			{
-				GameManager.Instance.m_ItsFirstMadaFaka=false;
-				GameManager.Instance.m_MovingFirstMadaFaka=true;
-				yield return new WaitForSeconds(0.5f);
-			}
-			else
-			{
-				m_SpawnTimePassed=0;
-				while(m_SpawnTimePassed<m_SpawnRate)
-				{
-				//	yield return new WaitForSeconds(m_SpawnRate);
-					yield return 0;
-					m_BarSpawn.fillAmount=m_SpawnTimePassed/m_SpawnRate;
-					m_SpawnTimePassed+=Time.deltaTime;
-				}
-				m_BarSpawn.fillAmount=0;
-			}
-			if(m_FreshMeats.Count>0)
-			{
-				SpawnFreshMeat();
-			}
-			else
-			{
-				while(m_FreshMeats.Count==0)
-				{
-					yield return new WaitForSeconds(m_FullHouseDelay);
-				}
-			}
-		}
-	}
-
-	//Spawn a new minion
-	private void SpawnFreshMeat()
-	{
-		if (m_FreshMeats.Count == 0)
-			return;
-
-		m_UsedMeats.Add (m_FreshMeats [0]);
-		m_FreshMeats [0].Spawn (GetRandomType(),m_Locations[0]);
-		m_Locations.RemoveAt (0);
-		m_FreshMeats.RemoveAt (0);
-	}
-
-	//return an unused minion to the pool
-	public void RetrieveMeat(int _idx)
-	{
-		int idToRetrieve = -1;
-		for (int i=0; i<m_UsedMeats.Count; i++) 
-		{
-			if(m_UsedMeats[i].m_Id==_idx)
-			{
-				idToRetrieve=i;
-				break;
-			}
-		}
-		if (idToRetrieve != -1) 
-		{
-			m_FreshMeats.Add(m_UsedMeats[idToRetrieve]);
-			m_Locations.Add(m_UsedMeats[idToRetrieve].m_LocationRef);
-			m_UsedMeats.RemoveAt(idToRetrieve);
-		}
-	}
-
-	private MeatType GetRandomType()
-	{
-		return (MeatType)Random.Range(0,(int)MeatType.MAX);
-	}
-
-/*	public void GetMoneyLimits(out float _minVal,out float _maxVal)
-	{
-		_minVal=Mathf.Floor(m_MinMoney*GameManager.Instance.GetBarValue(1));
-		_maxVal=Mathf.Ceil(m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
-	}
-
-	public void GetFaithLimits(out float _minVal,out float _maxVal)
-	{
-		_minVal=Mathf.Floor(m_MinFaith*GameManager.Instance.GetBarValue(2));
-		//_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2));
-		_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
-	}
-*/
+	#region RITUAL_CONTROL
 	public void TryToRitual(int _idx)
 	{
-		//make ritual to the choosen one
-		for (int i=0; i<m_UsedMeats.Count; i++) {
-			if (m_UsedMeats [i].m_Id == _idx) {
-				BossManager.Instance.DecreaseAnger (m_UsedMeats [i].ApplyRitual ());
-				break;
+		if (m_RitualInProgress)
+			return;
+		m_RitualInProgress = true;
+
+		StartCoroutine (RitualSteps (_idx));
+	}
+
+	IEnumerator RitualSteps(int _idx)
+	{
+		//if the minion is alive then apply a ritual to it
+		if (m_Minions [_idx].m_Alive) {
+			BossManager.Instance.DecreaseAnger (m_Minions [_idx].GetFaith ());
+			ResetMinion (_idx);
+		}
+		yield return 0;
+		DecrementWill ();
+		yield return new WaitForSeconds (1);
+		while(ResolvePenalties ())
+			yield return new WaitForSeconds(1);
+		CollectProfits ();
+		yield return new WaitForSeconds(1);
+		ReturnToFront ();
+		m_RitualInProgress = false;
+	}
+
+	private void CollectProfits()
+	{
+		m_Donations = 0;
+		for (int i=0; i<m_Minions.Length; i++) 
+		{
+			if(m_Minions[i].m_Alive)
+			{
+				m_Donations+=m_Minions[i].ChargeDonation();
 			}
 		}
-		//Resolve RitualAssistance
-		for (int j=0; j<m_UsedMeats.Count; j++) 
+		GameManager.Instance.AddMoney (m_Donations);
+	}
+
+	private void DecrementWill()
+	{
+		//decrement the will to all living minions on the front at the moment of the ritual
+		for (int i=0; i<m_Minions.Length; i++) 
 		{
-			m_UsedMeats[j].RitualAssistance();
+			if(!m_Minions[i].m_Alive)
+				continue;
+			m_Minions[i].DecreaseWill(m_WillDecrement);
 		}
 	}
 
-	public float GetRandomHeight()
+	private void DecreaseWillToARandomMinion()
 	{
-		return Random.Range (m_BottomHelper.anchoredPosition.y, m_TopHelper.anchoredPosition.y);
+
+		//decrement the will to all living minions on the front at the moment of the ritual
+		for (int i=0; i<m_Minions.Length; i++) 
+		{
+			if(!m_Minions[i].m_Alive||m_Minions[i].GetWill()==0)
+				continue;
+			Debug.Log("TARGET: "+i);
+			m_Minions[i].DecreaseWill(m_WillDecrement);
+			break;
+		}
 	}
 
-	public float GetInitialYPos()
+	private bool ResolvePenalties()
 	{
-		return m_InitialYPos;
+		for (int i=0; i<m_Minions.Length; i++) 
+		{
+			if(!m_Minions[i].m_Alive||m_Minions[i].GetWill()>0)
+				continue;
+			ApplyPenalty(m_Minions[i].GetPenalty());
+			RetreatMinion(i);
+			return true;
+		}
+		return false;
 	}
+
+	private void RetreatMinion(int _idx)
+	{
+		if (m_Minions [_idx].m_Alive && m_Minions [_idx].GetWill () == 0) 
+		{
+			m_Minions[_idx].m_Alive=false;
+			m_Minions[_idx].LeaveTheFront();
+		}
+	}
+
+	private void ApplyPenalty(Penalty _penalty)
+	{
+		switch(_penalty)
+		{
+			case Penalty.LoseInvestment_Small: //retrieve a small amount of money
+				GameManager.Instance.SpendMoney(m_InvestmentToLoseSmall,true);
+				//TODO: penalty FX
+			break;
+			case Penalty.LoseInvestment_Big: //retrieve big amount of money
+				GameManager.Instance.SpendMoney(m_InvestmentToLoseBig,true);
+				//TODO: penalty FX
+			break;
+
+			case Penalty.Difamation_Small: //remove -1 will to 1 random minions
+				DecreaseWillToARandomMinion();
+			break;
+			case Penalty.Difamation_Big: //remove -1 will to all minions
+			Debug.Log("QUE PITOS");
+				DecrementWill();
+			break;
+
+			case Penalty.Blasfemy_Small: //add a small amount of rage to the GOD
+				BossManager.Instance.penaltyGodStep(m_BlasfemyRageSmall);
+			break;
+			case Penalty.Blasfemy_Big: //add a big amount of rage to the GOD
+				BossManager.Instance.penaltyGodStep(m_BlasfemyRageBig);
+			break;
+
+			case Penalty.Loot_Small: //remove 1 upgrade to a random statue if possible
+				RemoveRandomUpgrades();
+			break;
+			case Penalty.Loot_Big: //remove 1 upgrade to all statues if possible
+				RemoveRandomUpgrades(true);
+			break;
+		}
+	}
+
+	private void RemoveRandomUpgrades(bool _all=false)
+	{
+		if (_all) {
+			for(int i=0;i<GameManager.Instance.m_SkillBars.Length;i++)
+			{
+				GameManager.Instance.m_SkillBars[i].DropLevel();
+			}
+		} else {
+			GameManager.Instance.m_SkillBars[Random.Range(0,GameManager.Instance.m_SkillBars.Length)].DropLevel();
+		}
+	}
+
+	public void ReturnToFront()
+	{
+		for(int i=0;i<m_Minions.Length;i++)
+		{
+			if(m_Minions[i].m_Alive||m_Minions[i].m_Moving)
+				continue;
+			m_Minions[i].Spawn(GetRandomType());
+		}
+	}
+	#endregion
+
+
+	#region MINIONDATA_CLASS
+	[System.Serializable]
+	public class MinionData
+	{
+		public float m_MinMoney;
+		public float m_MaxMoney;
+		public float m_MinFaith;
+		public float m_MaxFaith;
+		public float m_MinWill;
+		public float m_MaxWill;
+	}
+	#endregion
 }

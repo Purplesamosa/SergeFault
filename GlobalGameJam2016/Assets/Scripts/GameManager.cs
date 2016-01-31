@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class GameManager : MonoBehaviour {
+using TMPro;
+
+public class GameManager : GGJBase {
 	
 	//make this son of a bitch a singleton
 	#region Singleton
@@ -18,12 +20,14 @@ public class GameManager : MonoBehaviour {
 
 	private bool m_GameStarted = false;
 
-	public Text m_MoneyText;
+	public StatuePulse[] m_StatuePulses;
+
+	public TextMeshProUGUI m_MoneyText;
 	public bool m_ItsFirstMadaFaka = true;
 	public bool m_MovingFirstMadaFaka=false;
 
 	//Meat variables
-	public float m_MoveSpeed = 100;
+	public float m_MoveSpeed = 10;
 
 	//record game time
 	private float m_InitTime;
@@ -45,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
 		set{
 			m_Money=value;
-		//	m_MoneyText.text=m_Money.ToString();
+			m_MoneyText.text=m_Money.ToString();
 		}
 	}
 
@@ -57,22 +61,44 @@ public class GameManager : MonoBehaviour {
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
 	[SerializeField]
-	private SkillBar[] m_SkillBars;
+	public SkillBar[] m_SkillBars;
 
 	public bool IsGameOver()
 	{
 		return m_IsGameOver;
 	}
 
-	public bool SpendMoney(float _amount)
+	public bool SpendMoney(float _amount,bool _forceSpend=false)
 	{
 		if(Money >= _amount) //test to see if money is sufficient
 		{
 			Money -= _amount;
+
+			for (int i=0; i<m_StatuePulses.Length; i++) 
+			{
+				if(!m_SkillBars[i].CanAffordIt(Money))
+				{
+					m_StatuePulses[i].StopPulse();
+				}
+			}
+
 			return true;  //take money away and return true
 		}
 		else
 		{
+			if(_forceSpend)
+			{
+				Money=0;
+
+				for (int i=0; i<m_StatuePulses.Length; i++) 
+				{
+					if(!m_SkillBars[i].CanAffordIt(Money))
+					{
+						m_StatuePulses[i].StopPulse();
+					}
+				}
+				return true;
+			}
 			return false; //not enough money
 		}
 	}
@@ -98,6 +124,16 @@ public class GameManager : MonoBehaviour {
 	public void AddMoney(float _amount)
 	{
 		Money += _amount; //add new funds to total
+
+		for (int i=0; i<m_StatuePulses.Length; i++) 
+		{
+			Debug.Log("PREGUNTE");
+			if(m_SkillBars[i].CanAffordIt(Money))
+			{
+				Debug.Log("DIJO SI");
+				m_StatuePulses[i].StartPulse();
+			}
+		}
 	}
 
 	public void StartGame()
@@ -111,7 +147,7 @@ public class GameManager : MonoBehaviour {
 		m_EndTime = Time.time;
 		m_SessionLength = m_EndTime - m_InitTime; //get length of session
 		m_IsGameOver = true; 
-		AudioManager.Instance.EndGame();
+		//AudioManager.Instance.EndGame();
 	}
 
 	public float GetGameLength()
@@ -140,5 +176,26 @@ public class GameManager : MonoBehaviour {
 	public void DecrementBonusPoints(float _increment)
 	{
 		m_BonusPoints -= _increment;
+	}
+
+	public float GetMoneyBonus(MinionType _type)
+	{
+		if (_type == MinionType.SonOfARitch||_type==MinionType.RARE)
+			return m_SkillBars [1].GetBonus ();
+		return 0;
+	}
+
+	public float GetFaithBonus(MinionType _type)
+	{
+		if (_type == MinionType.Martir||_type==MinionType.RARE)
+			return m_SkillBars [2].GetBonus ();
+		return 0;
+	}
+
+	public float GetWillBonus(MinionType _type)
+	{
+		if (_type == MinionType.Believer||_type==MinionType.RARE)
+			return m_SkillBars [0].GetBonus ();
+		return 0;
 	}
 }
