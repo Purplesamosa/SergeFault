@@ -1,28 +1,28 @@
 fileFormatVersion: 2
 guid: cd0c72b0349a14c099b430b8f160a93c
-timeCreated: 1454190381
-licenseType: Pro
+timeCreated: 1454195215
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Atlas_MaquinaMuerte_0
-    21300002: Atlas_MaquinaMuerte_1
-    21300004: Atlas_MaquinaMuerte_2
-    21300006: Atlas_MaquinaMuerte_3
-    21300008: Atlas_MaquinaMuerte_4
-    21300010: Atlas_MaquinaMuerte_5
-    21300012: Atlas_MaquinaMuerte_6
-    21300014: Atlas_MaquinaMuerte_7
-    21300016: Atlas_MaquinaMuerte_8
-    21300018: Atlas_MaquinaMuerte_9
-    21300020: Atlas_MaquinaMuerte_10
-    21300022: Atlas_MaquinaMuerte_11
-    21300024: Atlas_MaquinaMuerte_12
-    21300026: Atlas_MaquinaMuerte_13
-    21300028: Atlas_MaquinaMuerte_14
-    21300030: Atlas_MaquinaMuerte_15
-    21300032: Atlas_MaquinaMuerte_16
-    21300034: Atlas_MaquinaMuerte_17
-    21300036: Atlas_MaquinaMuerte_18
+    21300000: GuillotineLeft_0
+    21300002: GuillotineRight_0
+    21300004: GuillotineLeft_1
+    21300006: GuillotineLeft_2
+    21300008: Nut
+    21300010: GuillotineCenter
+    21300012: DoorPart
+    21300014: PigVault
+    21300016: DeadMachineForeground
+    21300018: DeadMachineBackground
+    21300020: Preacher_0
+    21300022: Preacher_1
+    21300024: Preacher_2
+    21300026: Executioner_0
+    21300028: Executioner_1
+    21300030: Executioner_2
+    21300032: Pig_0
+    21300034: Pig_1
+    21300036: Pig_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -68,57 +68,57 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Atlas_MaquinaMuerte_0
+    - name: GuillotineLeft_0
       rect:
         serializedVersion: 2
         x: 0
         y: 428
         width: 55
         height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .75999999, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_1
+    - name: GuillotineRight_0
       rect:
         serializedVersion: 2
         x: 57
         y: 428
         width: 55
         height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .75999999, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_2
+    - name: GuillotineLeft_1
       rect:
         serializedVersion: 2
         x: 114
         y: 428
         width: 55
         height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .75999999, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_3
+    - name: GuillotineLeft_2
       rect:
         serializedVersion: 2
         x: 171
         y: 428
         width: 55
         height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .75999999, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_4
+    - name: Nut
       rect:
         serializedVersion: 2
         x: 228
         y: 428
         width: 55
         height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .75999999, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_5
+    - name: GuillotineCenter
       rect:
         serializedVersion: 2
         x: 285
@@ -126,9 +126,9 @@ TextureImporter:
         width: 57
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_6
+    - name: DoorPart
       rect:
         serializedVersion: 2
         x: 285
@@ -136,9 +136,9 @@ TextureImporter:
         width: 35
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_7
+    - name: PigVault
       rect:
         serializedVersion: 2
         x: 0
@@ -146,9 +146,9 @@ TextureImporter:
         width: 148
         height: 154
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_8
+    - name: DeadMachineForeground
       rect:
         serializedVersion: 2
         x: 150
@@ -156,9 +156,9 @@ TextureImporter:
         width: 92
         height: 130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_9
+    - name: DeadMachineBackground
       rect:
         serializedVersion: 2
         x: 0
@@ -166,9 +166,9 @@ TextureImporter:
         width: 153
         height: 101
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_10
+    - name: Preacher_0
       rect:
         serializedVersion: 2
         x: 155
@@ -176,9 +176,9 @@ TextureImporter:
         width: 50
         height: 56
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_11
+    - name: Preacher_1
       rect:
         serializedVersion: 2
         x: 207
@@ -186,9 +186,9 @@ TextureImporter:
         width: 50
         height: 56
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_12
+    - name: Preacher_2
       rect:
         serializedVersion: 2
         x: 155
@@ -196,9 +196,9 @@ TextureImporter:
         width: 50
         height: 56
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_13
+    - name: Executioner_0
       rect:
         serializedVersion: 2
         x: 0
@@ -206,9 +206,9 @@ TextureImporter:
         width: 86
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_14
+    - name: Executioner_1
       rect:
         serializedVersion: 2
         x: 88
@@ -216,9 +216,9 @@ TextureImporter:
         width: 86
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_15
+    - name: Executioner_2
       rect:
         serializedVersion: 2
         x: 176
@@ -226,9 +226,9 @@ TextureImporter:
         width: 86
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_16
+    - name: Pig_0
       rect:
         serializedVersion: 2
         x: 0
@@ -236,9 +236,9 @@ TextureImporter:
         width: 66
         height: 63
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_17
+    - name: Pig_1
       rect:
         serializedVersion: 2
         x: 68
@@ -246,9 +246,9 @@ TextureImporter:
         width: 66
         height: 63
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Atlas_MaquinaMuerte_18
+    - name: Pig_2
       rect:
         serializedVersion: 2
         x: 136
@@ -256,7 +256,7 @@ TextureImporter:
         width: 66
         height: 63
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

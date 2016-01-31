@@ -19,7 +19,7 @@ public class FreshMeat : GGJBase {
 	public RectTransform m_RectT;
 	private Vector2 m_MoveDir;
 
-	private float m_MinDistanceToReach=1;
+	private float m_MinDistanceToReach=4;
 
 	private float m_Money;
 	private float m_Faith;
@@ -42,9 +42,9 @@ public class FreshMeat : GGJBase {
 	{
 		m_Type = _type;
 		m_LocationReached = false;
-		AudienceManager.Instance.GetMoneyLimits (out m_MinMoney, out m_MaxMoney);
-		AudienceManager.Instance.GetFaithLimits (out m_MinFaith, out m_MaxFaith);
-		m_Money = Random.Range (m_MinMoney, m_MaxMoney);
+//		AudienceManager.Instance.GetMoneyLimits (out m_MinMoney, out m_MaxMoney);
+//		AudienceManager.Instance.GetFaithLimits (out m_MinFaith, out m_MaxFaith);
+		m_Money = Mathf.Ceil (Random.Range (m_MinMoney, m_MaxMoney));
 		m_Faith = Mathf.Floor(Random.Range (m_MinFaith, m_MaxFaith));
 
 		m_MoneyText.text = m_Money.ToString();
@@ -116,13 +116,17 @@ public class FreshMeat : GGJBase {
 	private void Leave()
 	{
 		m_LocationReached=false;
-		m_LocationVector=AudienceManager.Instance.GetExitPosition();
+		m_LocationVector = new Vector2 (m_LocationVector.x, AudienceManager.Instance.GetInitialYPos ());
 		m_MoveCallback += SceneLeft;
 		StartCoroutine (MoveToLocation ());
 	}
 
 	private void SeatReached()
 	{
+		if (GameManager.Instance.m_MovingFirstMadaFaka) {
+			GameManager.Instance.m_MovingFirstMadaFaka=false;
+			BossManager.Instance.deactivateSafeZone ();
+		}
 		m_MoveCallback -= SeatReached;
 		m_LocationReached=true;
 	}
@@ -136,7 +140,7 @@ public class FreshMeat : GGJBase {
 
 	private void Disappear()
 	{
-		m_RectT.anchoredPosition = AudienceManager.Instance.GetExitPosition();
+		m_RectT.anchoredPosition =  new Vector2 (m_LocationVector.x, AudienceManager.Instance.GetInitialYPos ());
 		AudienceManager.Instance.RetrieveMeat (m_Id);
 		AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.KillVillagerSound);
 	}

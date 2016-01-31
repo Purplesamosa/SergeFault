@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	public Text m_MoneyText;
+	public bool m_ItsFirstMadaFaka = true;
+	public bool m_MovingFirstMadaFaka=false;
 
 	//Meat variables
 	public float m_MoveSpeed = 100;
@@ -76,10 +78,9 @@ public class GameManager : MonoBehaviour {
 
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
-	public float GetBarValue(int _index)
+	public int GetBarLevel(int _index)
 	{
-		float temp=m_SkillBars[_index].GetValue();
-		return	temp;
+		return	m_SkillBars[_index].GetLevel();
 	}
 
 	public void AddMoney(float _amount)
