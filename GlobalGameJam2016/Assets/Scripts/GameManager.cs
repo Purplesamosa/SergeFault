@@ -174,7 +174,12 @@ public class GameManager : GGJBase {
 			DestroyImmediate(this);
 		}
 	}
-	
+
+	public void ReloadGame()
+	{
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
 	public void IncrementBonusPoints(float _increment)
 	{
 		m_BonusPoints += _increment;
