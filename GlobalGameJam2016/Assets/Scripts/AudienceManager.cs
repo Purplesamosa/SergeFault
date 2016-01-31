@@ -226,7 +226,15 @@ public class AudienceManager : GGJBase {
 		if (_all) {
 			for(int i=0;i<GameManager.Instance.m_SkillBars.Length;i++)
 			{
+<<<<<<< HEAD
 				GameManager.Instance.m_SkillBars[i].Downgrade();
+=======
+				m_Donations=0;
+				for(int i=0;i<m_UsedMeats.Count;i++)
+					m_Donations+=m_UsedMeats[i].ChargeDonation();
+				GameManager.Instance.AddMoney(m_Donations);
+				AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.MoneyChargeSound); //play the money sound
+>>>>>>> Development
 			}
 		} else {
 			GameManager.Instance.m_SkillBars[Random.Range(0,GameManager.Instance.m_SkillBars.Length)].Downgrade();
@@ -252,6 +260,11 @@ public class AudienceManager : GGJBase {
 		while (!GameManager.Instance.IsGameOver()) 
 		{
 
+<<<<<<< HEAD
+=======
+//			m_SpawnRate=Random.Range(m_MinSpawnRate-GameManager.Instance.GetBarValue(0),m_MaxSpawnRate-GameManager.Instance.GetBarValue(0));
+			m_SpawnRate=Mathf.Max(m_SpawnRate,1);
+>>>>>>> Development
 			//Spawn fresh meat delay
 			yield return new WaitForSeconds(m_CollectRate);
 			if(m_UsedMeats.Count>0)
@@ -283,6 +296,42 @@ public class AudienceManager : GGJBase {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	private MeatType GetRandomType()
+	{
+		return (MeatType)Random.Range(0,(int)MeatType.MAX);
+	}
+
+/*	public void GetMoneyLimits(out float _minVal,out float _maxVal)
+	{
+		_minVal=Mathf.Floor(m_MinMoney*GameManager.Instance.GetBarValue(1));
+		_maxVal=Mathf.Ceil(m_MaxMoney*GameManager.Instance.GetBarValue(1)/m_MaxMoneyDenominator);
+	}
+
+	public void GetFaithLimits(out float _minVal,out float _maxVal)
+	{
+		_minVal=Mathf.Floor(m_MinFaith*GameManager.Instance.GetBarValue(2));
+		//_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2));
+		_maxVal=Mathf.Ceil(m_MaxFaith*GameManager.Instance.GetBarValue(2)/m_MaxFaithDenominator);
+	}
+*/
+	public void TryToRitual(int _idx)
+	{
+		//make ritual to the choosen one
+		for (int i=0; i<m_UsedMeats.Count; i++) {
+			if (m_UsedMeats [i].m_Id == _idx) {
+				BossManager.Instance.DecreaseAnger (m_UsedMeats [i].ApplyRitual ());
+				break;
+			}
+		}
+		//Resolve RitualAssistance
+		for (int j=0; j<m_UsedMeats.Count; j++) 
+		{
+			m_UsedMeats[j].RitualAssistance();
+		}
+	}
+>>>>>>> Development
 
 
 	#region MINIONDATA_CLASS
