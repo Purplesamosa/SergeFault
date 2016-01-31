@@ -72,9 +72,7 @@ public class SkillBar : MonoBehaviour {
 	//getter used by GameManager
 	public float GetValue()
 	{
-		if (m_Value < m_MinValue)
-			return m_MinValue;
-		return m_Value*m_MaxValue;
+		return Mathf.Lerp (m_MinValue, m_MaxValue, m_Value);
 	}
 
 	//add amount to value if higher than max, make it max

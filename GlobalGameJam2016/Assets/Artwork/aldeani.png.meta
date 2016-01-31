@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: aea4bd2302f56415ca225d9a1a4b73b6
-timeCreated: 1454192520
+guid: e4047c1fc7e4d4ea6a47d5dd7cff3041
+timeCreated: 1454201215
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Solid_Red
-    21300002: Background
-    21300004: Solid_PurpleLight
+    21300000: Meat0
+    21300002: Meat1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,33 +51,23 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Solid_Red
-      rect:
-        serializedVersion: 2
-        x: 601
-        y: 129
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Background
+    - name: Meat0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 640
-        height: 640
+        width: 52
+        height: 109
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Solid_PurpleLight
+    - name: Meat1
       rect:
         serializedVersion: 2
-        x: 563
-        y: 533
-        width: 4
-        height: 4
+        x: 73
+        y: 0
+        width: 52
+        height: 109
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	public Text m_MoneyText;
+	public bool m_ItsFirstMadaFaka = true;
+	public bool m_MovingFirstMadaFaka=false;
 
 	//Meat variables
 	public float m_MoveSpeed = 100;
