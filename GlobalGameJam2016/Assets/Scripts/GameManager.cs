@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour {
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
 	[SerializeField]
-	private SkillBar[] m_SkillBars;
+	public SkillBar[] m_SkillBars;
 
 	public bool IsGameOver()
 	{
