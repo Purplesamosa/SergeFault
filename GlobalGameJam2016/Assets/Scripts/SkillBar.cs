@@ -5,7 +5,7 @@ using System.Collections;
 public class SkillBar : MonoBehaviour {
 
 	[SerializeField]
-	private Slider m_Slider;
+	private Image m_Slider;
 
 	//ID used to call the correct music
 	[SerializeField]
@@ -70,15 +70,13 @@ public class SkillBar : MonoBehaviour {
 	private void RunSmoothing()
 	{
 		m_CurVisualValue += (m_Value - m_CurVisualValue) * m_VisualSpeed * Time.deltaTime;
-		m_Slider.value = m_CurVisualValue;
+		m_Slider.fillAmount = m_CurVisualValue;
 	}
 
 	//getter used by GameManager
 	public float GetValue()
 	{
-		if (m_Value == 0)
-			return m_MinValue;
-		return m_Value*m_MaxValue;
+		return Mathf.Lerp (m_MinValue, m_MaxValue, m_Value);
 	}
 
 	//add amount to value if higher than max, make it max

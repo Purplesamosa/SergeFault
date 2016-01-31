@@ -31,10 +31,12 @@ public class BossManager: MonoBehaviour {
 	{
 		//this is to test the tick system
 	}
+	public MonsterAppearance m_Appearance;
 
 	public Slider m_Slider;
 
 	private bool m_SafeZone = true;
+	[SerializeField]
 	private float m_TotalAnger = 60F;
 	[SerializeField]
 	private float m_AngerIncrement = 1;
@@ -42,6 +44,9 @@ public class BossManager: MonoBehaviour {
 	private float m_IncrementRate = 1;
 	[SerializeField]
 	private float m_CurrentAnger;
+
+	public float m_VisualAnger=0;
+	private float m_SmoothSpeed = 1;
 
 	public void deactivateSafeZone(){
 		m_SafeZone = false;
@@ -51,24 +56,41 @@ public class BossManager: MonoBehaviour {
 		m_CurrentAnger = Mathf.Max (m_CurrentAnger - GameManager.Instance.m_RitualPoints * faith * GameManager.Instance.m_BonusPoints, 0);
 	}
 
+	private IEnumerator VisualTick()
+	{
+		while(true)
+		{
+			yield return 0;
+			BossFeedbackUpdate();
+			if(m_CurrentAnger==m_TotalAnger&&m_VisualAnger>m_TotalAnger*0.99f)
+			{
+				m_Slider.value = m_TotalAnger;
+				m_Appearance.m_Completion=1.0f;
+				StopCoroutine("VisualTick");
+			}
+		}
+	}
+
 	private IEnumerator Tick(){
 		while(true){
 			yield return new WaitForSeconds(m_IncrementRate);
 			m_CurrentAnger = Mathf.Min(m_CurrentAnger+m_AngerIncrement,m_TotalAnger);
-			BossFeedbackUpdate();
 			if(m_CurrentAnger >= m_TotalAnger)
 				GameManager.Instance.LoseGame();
 		}
 	}
 
 	public void BossFeedbackUpdate(){
-		m_Slider.value = m_CurrentAnger;
+		m_VisualAnger+=(m_CurrentAnger-m_VisualAnger)*m_SmoothSpeed*Time.deltaTime;
+		m_Slider.value = m_VisualAnger;
+		m_Appearance.m_Completion = m_VisualAnger / m_TotalAnger;//Mathf.Pow(m_VisualAnger/m_TotalAnger,3);
 	}
 
 	private IEnumerator SafeZone(){
 		while(m_SafeZone)
 			yield return 0;
 		StartCoroutine ("Tick");
+		StartCoroutine ("VisualTick");
 	}
 	// Use this for initialization
 	void Start () 
@@ -76,7 +98,6 @@ public class BossManager: MonoBehaviour {
 		m_Slider.maxValue = m_TotalAnger;
 		m_CurrentAnger = 0;
 		StartCoroutine ("SafeZone");
-		deactivateSafeZone ();
 	}
 
 
