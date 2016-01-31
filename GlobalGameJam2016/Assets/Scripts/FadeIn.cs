@@ -6,8 +6,10 @@ public class FadeIn : MonoBehaviour {
 
 	private Image m_Image;
 
+
 	public void StartFadeIn()
 	{
+		GetComponent<Button> ().interactable = true;
 		m_Image = GetComponent<Image>();
 		StartCoroutine(InFade());
 	}

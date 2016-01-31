@@ -18,9 +18,13 @@ public class GameManager : GGJBase {
 	}
 	#endregion
 
+	public ShakeTheObject[] m_shakes;
+
 	#region PARTICLES_CONTROL
 	public ParticleSystem m_LoseInvestmentFX;
 	#endregion
+
+	public Image[] m_HideHUDS;
 
 	private bool m_GameStarted = false;
 
@@ -68,6 +72,8 @@ public class GameManager : GGJBase {
 	[SerializeField]
 	public SkillBar[] m_SkillBars;
 
+	public Image[] m_HideShits;
+
 	public bool IsGameOver()
 	{
 		return m_IsGameOver;
@@ -114,6 +120,12 @@ public class GameManager : GGJBase {
 	{
 		m_GameStarted = true;
 		m_ScoreDisplayer.SetScore (m_Money);
+		AudienceManager.Instance.InitializeGame ();
+		BossManager.Instance.FakeStart ();
+		AudioManager.Instance.FakeStart ();
+
+
+
 	}
 
 
@@ -154,6 +166,14 @@ public class GameManager : GGJBase {
 		m_EndTime = Time.time;
 		m_SessionLength = m_EndTime - m_InitTime; //get length of session
 		m_IsGameOver = true; 
+		for (int i=0; i<m_shakes.Length; i++)
+			m_shakes [i].StartDestruction ();
+
+
+		for (int j=0; j<m_HideHUDS.Length; j++) 
+		{
+			m_HideHUDS[j].enabled=false;
+		}
 		//AudioManager.Instance.EndGame();
 	}
 

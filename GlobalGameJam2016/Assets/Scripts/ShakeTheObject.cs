@@ -36,18 +36,6 @@ public class ShakeTheObject : MonoBehaviour {
 		m_XStart = transform.position.x;
 	}
 
-	void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.X))
-		{
-			StartDestruction();
-		}
-		if(Input.GetKeyDown(KeyCode.R))
-		{
-			Debug.Log(transform.position + " " + gameObject.name);
-		}
-	}
-
 	public void StartDestruction()
 	{
 		StartCoroutine(BreakObject());

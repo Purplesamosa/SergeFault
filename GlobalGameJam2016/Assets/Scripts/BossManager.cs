@@ -30,11 +30,7 @@ public class BossManager: MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
-	
-	void Update()
-	{
-		//this is to test the tick system
-	}
+
 
 	public LightningBolt[] m_LightingBolt;
 	public MonsterAppearance m_MonsterAppearance;
@@ -44,7 +40,7 @@ public class BossManager: MonoBehaviour {
 	public Image m_Slider;
 	
 	private bool m_SafeZone = true;
-	private float m_TotalAnger = 60F;
+	private float m_TotalAnger = 80F;
 	[SerializeField]
 	private float m_AngerIncrement = 1;
 	[SerializeField]
@@ -105,6 +101,8 @@ public class BossManager: MonoBehaviour {
 					else
 						AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_STEP_01);
 				}
+
+				AudioManager.Instance.GoToLayer(curStep);
 			}
 			m_MonsterAppearance.MoveToValue(Mathf.Pow((float)curStep/(float)m_Steps,2));
 
@@ -132,7 +130,7 @@ public class BossManager: MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () 
+	public void FakeStart () 
 	{
 		m_CurrentAnger = 0;
 		StartCoroutine ("SafeZone");
