@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class GameManager : MonoBehaviour {
+using TMPro;
+
+public class GameManager : GGJBase {
 	
 	//make this son of a bitch a singleton
 	#region Singleton
@@ -16,10 +18,25 @@ public class GameManager : MonoBehaviour {
 	}
 	#endregion
 
-	public Text m_MoneyText;
+	public ShakeTheObject[] m_shakes;
+
+	#region PARTICLES_CONTROL
+	public ParticleSystem m_LoseInvestmentFX;
+	#endregion
+
+	public Image[] m_HideHUDS;
+
+	private bool m_GameStarted = false;
+
+	public StatuePulse[] m_StatuePulses;
+
+	public ScoreDisplayer m_ScoreDisplayer;
+
+	public bool m_ItsFirstMadaFaka = true;
+	public bool m_MovingFirstMadaFaka=false;
 
 	//Meat variables
-	public float m_MoveSpeed = 100;
+	public float m_MoveSpeed = 10;
 
 	//record game time
 	private float m_InitTime;
@@ -41,49 +58,101 @@ public class GameManager : MonoBehaviour {
 
 		set{
 			m_Money=value;
-			m_MoneyText.text=m_Money.ToString();
+			m_ScoreDisplayer.SetScore(m_Money);
 		}
 	}
 
 	//test to see if game has ended
 	private bool m_IsGameOver = false;
 
-
+	public Sprite[] m_PenaltyIcons;
 
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
 	[SerializeField]
-	private SkillBar[] m_SkillBars;
+	public SkillBar[] m_SkillBars;
+
+	public Image[] m_HideShits;
 
 	public bool IsGameOver()
 	{
 		return m_IsGameOver;
 	}
 
-	public bool SpendMoney(float _amount)
+	public Sprite GetPenaltyICon(Penalty _penalty)
+	{
+		return m_PenaltyIcons [(int)_penalty];
+	}
+
+	public bool SpendMoney(float _amount,bool _loseInvest=false)
 	{
 		if(Money >= _amount) //test to see if money is sufficient
 		{
 			Money -= _amount;
+			if(_loseInvest)
+				m_LoseInvestmentFX.Play(true);
+
+			CheckForStatuePulse ();
+
 			return true;  //take money away and return true
 		}
 		else
 		{
+			if(_loseInvest)
+			{
+				Money=0;
+				m_LoseInvestmentFX.Play(true);
+
+				CheckForStatuePulse ();
+
+				return true;
+			}
 			return false; //not enough money
 		}
+	}
+
+	public bool GetGameStart()
+	{
+		return m_GameStarted;
+	}
+
+	public void GameStarted()
+	{
+		m_GameStarted = true;
+		m_ScoreDisplayer.SetScore (m_Money);
+		AudienceManager.Instance.InitializeGame ();
+		BossManager.Instance.FakeStart ();
+		AudioManager.Instance.FakeStart ();
+
+
+
 	}
 
 
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
-	public float GetBarValue(int _index)
+	public int GetBarLevel(int _index)
 	{
-		return	m_SkillBars[_index].GetValue();
+		return	m_SkillBars[_index].GetLevel();
 	}
 
 	public void AddMoney(float _amount)
 	{
 		Money += _amount; //add new funds to total
+		CheckForStatuePulse ();
+	}
+
+	public void CheckForStatuePulse()
+	{
+		for (int i=0; i<m_StatuePulses.Length; i++) 
+		{
+			if(m_SkillBars[i].CanAffordIt(Money))
+			{
+				m_StatuePulses[i].StartPulse();
+			}
+			else
+				m_StatuePulses[i].StopPulse();
+		}
 	}
 
 	public void StartGame()
@@ -97,6 +166,15 @@ public class GameManager : MonoBehaviour {
 		m_EndTime = Time.time;
 		m_SessionLength = m_EndTime - m_InitTime; //get length of session
 		m_IsGameOver = true; 
+		for (int i=0; i<m_shakes.Length; i++)
+			m_shakes [i].StartDestruction ();
+
+
+		for (int j=0; j<m_HideHUDS.Length; j++) 
+		{
+			m_HideHUDS[j].enabled=false;
+		}
+		//AudioManager.Instance.EndGame();
 	}
 
 	public float GetGameLength()
@@ -116,7 +194,12 @@ public class GameManager : MonoBehaviour {
 			DestroyImmediate(this);
 		}
 	}
-	
+
+	public void ReloadGame()
+	{
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
 	public void IncrementBonusPoints(float _increment)
 	{
 		m_BonusPoints += _increment;
@@ -125,5 +208,26 @@ public class GameManager : MonoBehaviour {
 	public void DecrementBonusPoints(float _increment)
 	{
 		m_BonusPoints -= _increment;
+	}
+
+	public float GetMoneyBonus(MinionType _type)
+	{
+		if (_type == MinionType.SonOfARitch||_type==MinionType.RARE)
+			return m_SkillBars [1].GetBonus ();
+		return 0;
+	}
+
+	public float GetFaithBonus(MinionType _type)
+	{
+		if (_type == MinionType.Martir||_type==MinionType.RARE)
+			return m_SkillBars [2].GetBonus ();
+		return 0;
+	}
+
+	public float GetWillBonus(MinionType _type)
+	{
+		if (_type == MinionType.Believer||_type==MinionType.RARE)
+			return m_SkillBars [0].GetBonus ();
+		return 0;
 	}
 }

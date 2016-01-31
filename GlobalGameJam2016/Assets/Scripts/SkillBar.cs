@@ -5,137 +5,77 @@ using System.Collections;
 public class SkillBar : MonoBehaviour {
 
 	[SerializeField]
-	private Slider m_Slider;
+	private Image[] m_Balls;
 
-	//max value of bar
+	//ID used to call the correct music
 	[SerializeField]
-	private float m_MaxValue;
+	private AudioManager.SfxNoLoop m_SliderEnum;
 
-	//min value of bar
-	[SerializeField]
-	private float m_MinValue=1;
-
-	//value of the skill bar
-	[SerializeField]
-	private float m_Value;
-
-	//the price to use the button to increase the value
-	public float m_Cost;
-
-	#region Increase Value
-
-	//key to play with
-	private byte m_CoroutineKey;
-
-
-
-	//value to increment with
-	[SerializeField]
-	private float m_Increment;
-	//how often to check over the increment
-	[SerializeField]
-	private float m_IncrementCheckRate;
-
-
+	#region PARTICLE_CONTROL
+	public ParticleSystem m_LvlUpParticles;
+	public ParticleSystem m_LootFx;
 	#endregion
+	private int m_Level = 0;
 
-	//value for slider to have a smoothing effect
-	private float m_CurVisualValue;
-	//how fast the smoothing should function
-	[SerializeField]
-	private float m_VisualSpeed;
+	//the price to use the button to increase the value each level (3 possibles)
+	public float[] m_Costs;
 
-	//value to decrement with
-	[SerializeField]
-	private float m_Decrement;
-	//how often to check over the Decrement
-	[SerializeField]
-	private float m_DecrementCheckRate;
+	public float[] m_Bonus;
 
 
-	void Start()
+	public bool CanAffordIt(float _money)
 	{
-		StartCoroutine(CheckDecrease());
-	}
-
-	void Update()
-	{
-		RunSmoothing();
-	}
-
-	private void RunSmoothing()
-	{
-		m_CurVisualValue += (m_Value - m_CurVisualValue) * m_VisualSpeed * Time.deltaTime;
-		m_Slider.value = m_CurVisualValue;
-	}
-
-	//getter used by GameManager
-	public float GetValue()
-	{
-		if (m_Value == 0)
-			return m_MinValue;
-		return m_Value*m_MaxValue;
-	}
-
-	//add amount to value if higher than max, make it max
-	public void IncreaseValue()
-	{
-		//spend money to increment
-		if(m_Value < 1)
+		if (m_Level < m_Costs.Length) 
 		{
-			if(GameManager.Instance.SpendMoney(m_Cost))
-			{
-				m_Value = Mathf.Min(m_Value + m_Increment,1);
-			}
+			if(m_Level==(m_Costs.Length-1))
+				return false;
+			return _money>=m_Costs[m_Level];
 		}
+		return false;
 	}
-
-	//subtract amount from value if less than 0, make it 0
-	public void DecreaseValue(float _amount)
-	{
-		if(m_Value > 0)
-		{
-			m_Value = Mathf.Max(m_Value - _amount,0);
-		}
-	}
-
-	private byte GetNewKey()
-	{
-		return m_CoroutineKey++;
-	}
-
-	private IEnumerator CheckIncrease(byte _key)
-	{
-		while( m_CoroutineKey == _key)
-		{
-			IncreaseValue();
-			yield return new WaitForSeconds(m_IncrementCheckRate);
-		}
-	}
-
-	private IEnumerator CheckDecrease()
-	{
-		while(!GameManager.Instance.IsGameOver())
-		{
-			DecreaseValue(m_Decrement);
-			yield return new WaitForSeconds(m_DecrementCheckRate);
-		}
-	}
-
+	
 	//gets called when the button is Down
 	public void OnBtnDown()
 	{
-		if(GameManager.Instance.IsGameOver())
-			return;
-		GetNewKey();
-		StartCoroutine(CheckIncrease(m_CoroutineKey));
+		if(m_Level < 3)
+		{
+			TryToLevelUp();
+		}
 	}
 
-	//gets called when the button is up
-	public void OnBtnUp()
+	private void TryToLevelUp()
 	{
-		if(GameManager.Instance.IsGameOver())
-			return;
-		GetNewKey();
+		if(GameManager.Instance.SpendMoney(m_Costs[m_Level]))
+		{
+			m_Balls[m_Level++].enabled = true;
+			m_LvlUpParticles.Play(true);
+
+			AudioManager.Instance.PlaySfxNoLoop(m_SliderEnum);
+		}
+	}
+
+	public int GetLevel()
+	{
+		if(m_Level<3)
+			return m_Level;
+
+		return 2;
+	}
+
+	public float GetBonus()
+	{
+		return m_Bonus[GetLevel()];
+	}
+
+	public bool DropLevel()
+	{
+		if(m_Level > 0)
+		{
+			m_Balls[--m_Level].enabled = false;
+			m_LootFx.Play (true);
+			GameManager.Instance.CheckForStatuePulse();
+			return true;
+		}
+		return false;
 	}
 }

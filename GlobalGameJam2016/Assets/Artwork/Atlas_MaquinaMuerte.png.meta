@@ -1,0 +1,308 @@
+fileFormatVersion: 2
+guid: cd0c72b0349a14c099b430b8f160a93c
+timeCreated: 1454271967
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Bank
+    21300002: Pig0
+    21300004: Pig1
+    21300006: Pig2
+    21300008: Preacher2
+    21300010: Preacher0
+    21300012: Preacher1
+    21300014: Preacher3
+    21300016: Preacher4
+    21300018: Preacher5
+    21300020: GillotinaBase
+    21300022: cuchilla2
+    21300024: cuchilla1
+    21300026: cuchilla0
+    21300028: cuchilla3
+    21300030: engrane
+    21300032: puerta
+    21300034: gillotina
+    21300036: gillotinauerta
+    21300038: verdugo0
+    21300040: verdugo1
+    21300042: verdugo2
+    21300044: PreacherGay
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -2
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Bank
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 148
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pig0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 25
+        width: 64
+        height: 61
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pig1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 25
+        width: 64
+        height: 61
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pig2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 25
+        width: 64
+        height: 61
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher2
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 356
+        width: 48
+        height: 56
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher0
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 225
+        width: 48
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher1
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 224
+        width: 48
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher3
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 284
+        width: 48
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher4
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 212
+        width: 48
+        height: 70
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Preacher5
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 140
+        width: 48
+        height: 70
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: GillotinaBase
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 296
+        width: 92
+        height: 130
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cuchilla2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cuchilla1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cuchilla0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cuchilla3
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: engrane
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 428
+        width: 55
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: puerta
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 465
+        width: 35
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: gillotina
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 477
+        width: 57
+        height: 35
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: gillotinauerta
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 169
+        width: 153
+        height: 101
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: verdugo0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 85
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: verdugo1
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 90
+        width: 84
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: verdugo2
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 92
+        width: 83
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: PreacherGay
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 18
+        width: 48
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
