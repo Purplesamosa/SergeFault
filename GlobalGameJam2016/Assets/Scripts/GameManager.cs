@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public bool GetGameStart()
+	{
+		return m_GameStarted;
+	}
+
 	public void GameStarted()
 	{
 		m_GameStarted = true;
