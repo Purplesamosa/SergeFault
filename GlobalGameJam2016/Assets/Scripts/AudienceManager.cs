@@ -58,6 +58,11 @@ public class AudienceManager : GGJBase {
 	private int m_SmallPenaltyChancesIDx=0;
 	#endregion
 
+	#region ANIM_CONTROL
+	public Animator m_GillotinaAnim;
+	public ParticleSystem m_BloodFX;
+	#endregion
+
 	#region SPAWN_CONTROL
 	//Spawn all possible minions
 	private void SpawnMinions()
@@ -166,19 +171,28 @@ public class AudienceManager : GGJBase {
 
 	IEnumerator RitualSteps(int _idx)
 	{
+		m_GillotinaAnim.SetBool ("StartAnim", true);
+		AudioManager.Instance.PlaySfxNoLoop (AudioManager.SfxNoLoop.MACHINE_STARTS);
+
 		//if the minion is alive then apply a ritual to it
 		if (m_Minions [_idx].m_Alive) {
 			BossManager.Instance.DecreaseAnger (m_Minions [_idx].GetFaith ());
 			ResetMinion (_idx);
 		}
+
 		yield return 0;
 		DecrementWill ();
 		yield return new WaitForSeconds (1);
 		while(ResolvePenalties ())
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(0.5f);
 		CollectProfits ();
+		yield return new WaitForSeconds(4);
+		m_GillotinaAnim.SetBool ("ContinueAnim", true);
+		AudioManager.Instance.PlaySfxNoLoop (AudioManager.SfxNoLoop.MACHINE_REWIND);
 		yield return new WaitForSeconds(1);
 		ReturnToFront ();
+
+
 		m_RitualInProgress = false;
 	}
 

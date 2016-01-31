@@ -41,7 +41,7 @@ public class BossManager: MonoBehaviour {
 	public int m_Steps=12;
 	private int m_LastStep=0;
 
-	public Slider m_Slider;
+	public Image m_Slider;
 	
 	private bool m_SafeZone = true;
 	private float m_TotalAnger = 60F;
@@ -85,7 +85,7 @@ public class BossManager: MonoBehaviour {
 	}
 	
 	public void BossFeedbackUpdate(){
-		m_Slider.value = m_CurrentAnger;
+		m_Slider.fillAmount = m_CurrentAnger/m_TotalAnger;
 		//get current step
 		int curStep = Mathf.FloorToInt((m_CurrentAnger / m_TotalAnger)*m_Steps);
 		if (curStep != m_LastStep) 
@@ -95,6 +95,15 @@ public class BossManager: MonoBehaviour {
 				for(int i=0;i<Random.Range(1,m_LightingBolt.Length);i++)
 				{
 					m_LightingBolt[i].GenerateBolt();
+				}
+				if(curStep==(m_Steps-1))
+					AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_STEP_04);
+				else
+				{
+					if(curStep==m_Steps)
+						AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_GAMEOVER);
+					else
+						AudioManager.Instance.PlaySfxNoLoop(AudioManager.SfxNoLoop.GOD_STEP_01);
 				}
 			}
 			m_MonsterAppearance.MoveToValue(Mathf.Pow((float)curStep/(float)m_Steps,2));
@@ -125,7 +134,6 @@ public class BossManager: MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		m_Slider.maxValue = m_TotalAnger;
 		m_CurrentAnger = 0;
 		StartCoroutine ("SafeZone");
 		deactivateSafeZone ();

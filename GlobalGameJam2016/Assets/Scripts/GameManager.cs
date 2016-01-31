@@ -26,7 +26,8 @@ public class GameManager : GGJBase {
 
 	public StatuePulse[] m_StatuePulses;
 
-	public TextMeshProUGUI m_MoneyText;
+	public ScoreDisplayer m_ScoreDisplayer;
+
 	public bool m_ItsFirstMadaFaka = true;
 	public bool m_MovingFirstMadaFaka=false;
 
@@ -53,14 +54,14 @@ public class GameManager : GGJBase {
 
 		set{
 			m_Money=value;
-			m_MoneyText.text=m_Money.ToString();
+			m_ScoreDisplayer.SetScore(m_Money);
 		}
 	}
 
 	//test to see if game has ended
 	private bool m_IsGameOver = false;
 
-
+	public Sprite[] m_PenaltyIcons;
 
 	//reference to skill bars
 	//0 : Time   |   1 : Money  |  2 : Faith
@@ -72,6 +73,11 @@ public class GameManager : GGJBase {
 		return m_IsGameOver;
 	}
 
+	public Sprite GetPenaltyICon(Penalty _penalty)
+	{
+		return m_PenaltyIcons [(int)_penalty];
+	}
+
 	public bool SpendMoney(float _amount,bool _loseInvest=false)
 	{
 		if(Money >= _amount) //test to see if money is sufficient
@@ -80,13 +86,7 @@ public class GameManager : GGJBase {
 			if(_loseInvest)
 				m_LoseInvestmentFX.Play(true);
 
-			for (int i=0; i<m_StatuePulses.Length; i++) 
-			{
-				if(!m_SkillBars[i].CanAffordIt(Money))
-				{
-					m_StatuePulses[i].StopPulse();
-				}
-			}
+			CheckForStatuePulse ();
 
 			return true;  //take money away and return true
 		}
@@ -97,13 +97,8 @@ public class GameManager : GGJBase {
 				Money=0;
 				m_LoseInvestmentFX.Play(true);
 
-				for (int i=0; i<m_StatuePulses.Length; i++) 
-				{
-					if(!m_SkillBars[i].CanAffordIt(Money))
-					{
-						m_StatuePulses[i].StopPulse();
-					}
-				}
+				CheckForStatuePulse ();
+
 				return true;
 			}
 			return false; //not enough money
@@ -118,6 +113,7 @@ public class GameManager : GGJBase {
 	public void GameStarted()
 	{
 		m_GameStarted = true;
+		m_ScoreDisplayer.SetScore (m_Money);
 	}
 
 
@@ -131,15 +127,19 @@ public class GameManager : GGJBase {
 	public void AddMoney(float _amount)
 	{
 		Money += _amount; //add new funds to total
+		CheckForStatuePulse ();
+	}
 
+	public void CheckForStatuePulse()
+	{
 		for (int i=0; i<m_StatuePulses.Length; i++) 
 		{
-			Debug.Log("PREGUNTE");
 			if(m_SkillBars[i].CanAffordIt(Money))
 			{
-				Debug.Log("DIJO SI");
 				m_StatuePulses[i].StartPulse();
 			}
+			else
+				m_StatuePulses[i].StopPulse();
 		}
 	}
 

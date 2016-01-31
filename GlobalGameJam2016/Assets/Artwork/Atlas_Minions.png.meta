@@ -1,0 +1,627 @@
+fileFormatVersion: 2
+guid: 450f8f9121b7ebb4e8583d99bbe7e688
+timeCreated: 1454269760
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: BrownBelieverLeaving1
+    21300002: BlueBelieverLeaving1
+    21300004: RedBeliverLeaving1
+    21300006: GreenBelieverEntering1
+    21300008: BrownBelieverEntering1
+    21300010: BlueBelieverEntering1
+    21300012: RedBeliverEntering1
+    21300014: BrownBelieverLeaving2
+    21300016: BlueBelieverLeaving2
+    21300018: RedBeliverLeaving2
+    21300020: GreenBelieverEntering2
+    21300022: BrownBelieverEntering2
+    21300024: BlueBelieverEntering2
+    21300026: RedBeliverEntering2
+    21300028: Aldeanos atlas 512x512_14
+    21300030: Aldeanos atlas 512x512_15
+    21300032: GreenBelieverLeaving1
+    21300034: GreenBelieverLeaving2
+    21300036: GreenBelieverWaiting
+    21300038: BrownBelieverWaiting
+    21300040: BlueBelieverWaiting
+    21300042: RedBeliverWaiting
+    21300044: Aldeanos_Atlas_0
+    21300046: Aldeanos_Atlas_1
+    21300048: Aldeanos_Atlas_2
+    21300050: Aldeanos_Atlas_3
+    21300052: Aldeanos_Atlas_4
+    21300054: Aldeanos_Atlas_5
+    21300056: Aldeanos_Atlas_6
+    21300058: Aldeanos_Atlas_7
+    21300060: Aldeanos_Atlas_8
+    21300062: Aldeanos_Atlas_9
+    21300064: Aldeanos_Atlas_10
+    21300066: Aldeanos_Atlas_11
+    21300068: Aldeanos_Atlas_12
+    21300070: Aldeanos_Atlas_13
+    21300072: Aldeanos_Atlas_14
+    21300074: Aldeanos_Atlas_15
+    21300076: Aldeanos_Atlas_16
+    21300078: Aldeanos_Atlas_17
+    21300080: Aldeanos_Atlas_18
+    21300082: Aldeanos_Atlas_19
+    21300084: Aldeanos_Atlas_20
+    21300086: Aldeanos_Atlas_21
+    21300088: ScoreBar
+    21300090: Money_Holder
+    21300092: StatueIcon_Work
+    21300094: StatueIcon_Faith
+    21300096: StatueIcon_Will
+    21300098: Statue_WorkHolder
+    21300100: Statue_FaithHolder
+    21300102: Statue_WillHolder
+    21300104: Penalty_Difamation
+    21300106: Penalty_LoseInvestment
+    21300108: Penalty_Loot
+    21300110: Penalty_Blasfemy
+    21300112: WorkContainer
+    21300114: WillContainer
+    21300116: FaithContainer
+    21300118: RageStep_Off
+    21300120: RageStep_On
+    21300122: Bar_Filler
+    21300124: Bar_BG
+    21300126: WS_0
+    21300128: WS_1
+    21300130: WS_2
+    21300132: FS_0
+    21300134: FS_1
+    21300136: FS_2
+    21300138: WiS_0
+    21300140: WiS_1
+    21300142: WiS_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -2
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Aldeanos_Atlas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_2
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_3
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_4
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_5
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_6
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 396
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_8
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_9
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_10
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_11
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_12
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 278
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_13
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 278
+        width: 66
+        height: 117
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_14
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 237
+        width: 24
+        height: 39
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_15
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 237
+        width: 24
+        height: 39
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_16
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_17
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_18
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_19
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_20
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aldeanos_Atlas_21
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 160
+        width: 66
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ScoreBar
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 113
+        width: 382
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Money_Holder
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 156
+        width: 48
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: StatueIcon_Work
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 128
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: StatueIcon_Faith
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 128
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: StatueIcon_Will
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 128
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Statue_WorkHolder
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 38
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Statue_FaithHolder
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 112
+        width: 38
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Statue_WillHolder
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 38
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Penalty_Difamation
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Penalty_LoseInvestment
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 36
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Penalty_Loot
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 36
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Penalty_Blasfemy
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 36
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WorkContainer
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 69
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WillContainer
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 44
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FaithContainer
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 19
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RageStep_Off
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 19
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RageStep_On
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 19
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bar_Filler
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 127
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bar_BG
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 139
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WS_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WS_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 67
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WS_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FS_0
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FS_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 67
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FS_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WiS_0
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WiS_1
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 67
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: WiS_2
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 67
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
