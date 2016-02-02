@@ -25,6 +25,7 @@ public class GameManager : GGJBase {
 	#endregion
 
 	public Image[] m_HideHUDS;
+	public Image[] m_ShowHUDS;
 
 	private bool m_GameStarted = false;
 
@@ -73,6 +74,14 @@ public class GameManager : GGJBase {
 	public SkillBar[] m_SkillBars;
 
 	public Image[] m_HideShits;
+
+	void Start()
+	{
+		for (int j=0; j<m_ShowHUDS.Length; j++) 
+		{
+			m_ShowHUDS[j].enabled=false;
+		}
+	}
 
 	public bool IsGameOver()
 	{
@@ -123,6 +132,11 @@ public class GameManager : GGJBase {
 		AudienceManager.Instance.InitializeGame ();
 		BossManager.Instance.FakeStart ();
 		AudioManager.Instance.FakeStart ();
+
+		for (int j=0; j<m_ShowHUDS.Length; j++) 
+		{
+			m_ShowHUDS[j].enabled=true;
+		}
 
 
 

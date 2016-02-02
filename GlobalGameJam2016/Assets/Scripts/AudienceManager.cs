@@ -60,6 +60,7 @@ public class AudienceManager : GGJBase {
 
 	#region ANIM_CONTROL
 	public Animator m_GillotinaAnim;
+	public Animator m_Chaman;
 	public ParticleSystem m_BloodFX;
 	#endregion
 
@@ -178,6 +179,7 @@ public class AudienceManager : GGJBase {
 		yield return 0;
 		DecrementWill ();
 		yield return new WaitForSeconds (1);
+		m_Chaman.SetBool ("HasSacrifice", true);
 		while(ResolvePenalties ())
 			yield return new WaitForSeconds(0.5f);
 		CollectProfits ();
